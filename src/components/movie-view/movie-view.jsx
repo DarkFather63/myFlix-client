@@ -1,6 +1,20 @@
 import React from 'react';
 
 export class MovieView extends React.Component {
+
+  //Below code is for testing unmounting components and key events.
+  // keypressCallback(event) {
+  //   console.log(event.key);
+  // }
+
+  // componentDidMount() {
+  //   document.addEventListener('keypress', this.keypressCallback);
+  // }
+
+  // componentWillUnmount() {
+  //   document.removeEventListener('keypress', this.keypressCallback);
+  // }
+
   render() {
     const { movie, onBackClick } = this.props;
     return (
