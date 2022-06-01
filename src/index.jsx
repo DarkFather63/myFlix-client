@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
+
 //importing MainView component from components folder
 import { MainView } from './components/main-view/main-view';
 
