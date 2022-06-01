@@ -18,7 +18,7 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://eryn-moviedb.herokuapp.com/movies')
+    axios.get('https://eryn-moviedb.herokuapp.com')
       .then(response => {
         this.setState({
           movies: response.data
@@ -44,9 +44,9 @@ export class MainView extends React.Component {
       <div className='main-view'>
         {selectedMovie
           ? (<MovieView movie={selectedMovie} onBackClick={() => { this.setSelectedMovie(newSelectedMovie) }} />)
-          : movies.map(movie => (
+          : (movies.map(movie => (
             <MovieCard key={movie._id} movieData={movie} onMovieClick={(movie) => { this.setSelectedMovie(movie) }} />
-          ))
+          )))
 
         }
       </div>
