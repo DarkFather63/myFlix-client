@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 //importing MainView component from components folder
 import { MainView } from './components/main-view/main-view';
 
@@ -19,5 +19,4 @@ class MyFlixApplication extends React.Component {
 const container = document.getElementsByClassName('app-container')[0];
 
 // Tells React to render your app in the root DOM element
-ReactDOM.createRoot(React.createElement(MyFlixApplication), container);
-root.render(React.createElement(MyFlixApplication));
+ReactDOM.render(React.createElement(MyFlixApplication), container);
