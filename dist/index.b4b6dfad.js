@@ -27012,7 +27012,7 @@ class MainView extends (0, _reactDefault.default).Component {
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
                 lineNumber: 46,
-                columnNumber: 14
+                columnNumber: 13
             }, this) : movies.map((movie1)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
                     movieData: movie1,
                     onMovieClick: (movie)=>{
