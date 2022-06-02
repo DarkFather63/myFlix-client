@@ -26996,7 +26996,8 @@ class MainView extends (0, _reactDefault.default).Component {
     render() {
         const { movies , selectedMovie  } = this.state;
         if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-            className: "main-view"
+            className: "main-view",
+            children: "There are no movies here"
         }, void 0, false, {
             fileName: "src/components/main-view/main-view.jsx",
             lineNumber: 41,
