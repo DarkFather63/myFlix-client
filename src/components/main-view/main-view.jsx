@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { LoginView } from '../login-view/login-view';
+import { RegistrationView } from '../registration-view/registration-view';
 
 
 export class MainView extends React.Component {
@@ -13,7 +15,8 @@ export class MainView extends React.Component {
     super();
     this.state = {
       movies: [],
-      selectedMovie: null
+      selectedMovie: null,
+      user: null
     };
   }
 
@@ -35,8 +38,16 @@ export class MainView extends React.Component {
     });
   }
 
+  onLoggedIn(user) {
+    this.setState({
+      user
+    });
+  }
+
   render() {
-    const { movies, selectedMovie } = this.state;
+    const { movies, selectedMovie, user } = this.state;
+
+    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
 
     if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
 
@@ -45,7 +56,7 @@ export class MainView extends React.Component {
         {selectedMovie
           ? <MovieView movie={selectedMovie} onBackClick={() => { this.setSelectedMovie(newSelectedMovie) }} />
           : movies.map(movie => (
-            <MovieCard key={movie._id} movieData={movie} onMovieClick={(movie) => { this.setSelectedMovie(movie) }} />
+            <MovieCard key={movie._id} movie={movie} onMovieClick={(movie) => { this.setSelectedMovie(movie) }} />
           ))
 
         }
