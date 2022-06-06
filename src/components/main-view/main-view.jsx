@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { Row } from 'react-bootstrap/Row';
-import { Col } from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
-import { RegistrationView } from '../registration-view/registration-view';
+//import { RegistrationView } from '../registration-view/registration-view';
 
 
 export class MainView extends React.Component {
@@ -22,8 +22,10 @@ export class MainView extends React.Component {
     };
   }
 
-  componentDidMount() {
-    axios.get('https://eryn-moviedb.herokuapp.com/movies')
+  getMovies(token) {
+    axios.get('https://eryn-moviedb.herokuapp.com/movies', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(response => {
         this.setState({
           movies: response.data
@@ -40,11 +42,17 @@ export class MainView extends React.Component {
     });
   }
 
-  onLoggedIn(user) {
+  onLoggedIn(authData) {
+    console.log(authData);
     this.setState({
-      user
+      user: authData.user.Username
     });
+
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
+    this.getMovies(authData.token);
   }
+
 
   render() {
     const { movies, selectedMovie, user } = this.state;

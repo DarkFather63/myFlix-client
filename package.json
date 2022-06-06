@@ -20,11 +20,12 @@
   "homepage": "https://github.com/DarkFather63/myFlix-client#readme",
   "dependencies": {
     "axios": "^0.27.2",
-    "prop-types": "^15.8.1",
     "bootstrap": "^5.1.3",
+    "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-bootstrap": "^2.4.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "react-router-redux": "^5.0.0-alpha.9"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.0",
