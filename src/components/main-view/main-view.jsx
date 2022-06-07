@@ -53,6 +53,15 @@ export class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
+  componentDidMount() {
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user')
+      });
+      this.getMovies(accessToken);
+    }
+  }
 
   render() {
     const { movies, selectedMovie, user } = this.state;
