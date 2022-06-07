@@ -3,6 +3,7 @@ import { useState } from 'react';
 //NOTE: when importing bootstrap functions/components, it works like the 'default' on your components - no curly braces needed
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Link from 'react-bootstrap';
 import axios from 'axios';
 
 export function LoginView(props) {
