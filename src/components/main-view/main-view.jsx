@@ -63,6 +63,14 @@ export class MainView extends React.Component {
     }
   }
 
+  onLoggedOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.setState({
+      user: null
+    });
+  }
+
   render() {
     const { movies, selectedMovie, user } = this.state;
 
@@ -72,6 +80,7 @@ export class MainView extends React.Component {
 
     return (
       <Row className='main-view justify-content-md-center'>
+        <Button onClick={() => { this.onLoggedOut() }}>Logout</Button>
         {selectedMovie
           ? (
             <Col md={8}>
