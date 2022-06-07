@@ -52,7 +52,7 @@ export function RegistrationView(props) {
     e.preventDefault();
     const isReq = validate();
     if (isReq) {
-      axios.post('https://eryn-moviedb.herokuapp.com/register', {
+      axios.post('https://eryn-moviedb.herokuapp.com/users', {
         Username: username,
         Password: password,
         Email: email,
@@ -60,10 +60,11 @@ export function RegistrationView(props) {
       })
         .then(response => {
           const data = response.data;
-          props.onRegistration(data);
+          console.log(data);
+          window.open('/', '_self');
         })
         .catch(e => {
-          console.log('something went wrong')
+          console.log('error registering the user')
         });
     }
   }
