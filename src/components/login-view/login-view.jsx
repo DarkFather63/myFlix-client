@@ -1,10 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
+import axios from 'axios';
+import useState from 'react';
 //NOTE: when importing bootstrap functions/components, it works like the 'default' on your components - no curly braces needed
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Link from 'react-bootstrap';
-import axios from 'axios';
+import { Row, Col, Container, Card, Link } from 'react-bootstrap';
+
 
 export function LoginView(props) {
   const [username, setUsername] = useState('');
@@ -51,23 +52,39 @@ export function LoginView(props) {
 
 
   return (
-    <Form>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
-        {usernameErr && <p>{usernameErr}</p>}
-      </Form.Group>
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-        {passwordErr && <p>{passwordErr}</p>}
-      </Form.Group>
-      <Button variant="primary" type="submit" onClick={handleSubmit}>
-        Login
-      </Button>
-      <Link to={`/registration`}>
-        <Button variant="link">Register</Button>
-      </Link>
-    </Form>
+    <Container>
+      <Row>
+        <Col>
+          <Card style={{ marginTop: 100, marginBottom: 50 }}>
+            <Card.Body>
+              <Card.Title style={{ textAlign: 'center', fontSize: '2rem' }}>Welcome to MyFlix!</Card.Title>
+              <Form className='login-border'>
+
+                <Form.Group controlId="formUsername">
+                  <Form.Label>Username:</Form.Label>
+                  <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
+                  {usernameErr && <p>{usernameErr}</p>}
+                </Form.Group>
+
+                <Form.Group controlId="formPassword">
+                  <Form.Label>Password:</Form.Label>
+                  <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                  {passwordErr && <p>{passwordErr}</p>}
+                </Form.Group>
+
+                <Button variant="primary" type="submit" onClick={handleSubmit}>
+                  Login
+                </Button>
+
+                <Link to={`/register`}>
+                  <Button variant="link">Register</Button>
+                </Link>
+
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container >
   );
 }

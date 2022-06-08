@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap';
 import Link from 'react-bootstrap';
 
 export class ProfileView extends React.Component {

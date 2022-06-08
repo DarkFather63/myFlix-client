@@ -4,8 +4,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Link from 'react-bootstrap';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Route from 'react-router-dom';
+import Redirect from 'react-router-dom';
 
+
+//Importing each view from their respective files (7 views so far)
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
@@ -13,9 +17,8 @@ import { RegistrationView } from '../registration-view/registration-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
-import { ProfileEditView } from '../profile-edit-view/profile-edit-view';
 
-
+//exports this view to the main index.jsx file (then to index.html)
 export class MainView extends React.Component {
 
   //'Constructor' is the place to initialize a state's values - reps the moment a component is created in the memory.
@@ -29,8 +32,10 @@ export class MainView extends React.Component {
     };
   }
 
+  //'GETs' movies from database (link to app), adds authorization so no one can simply enter endpoints
+  //Have to log in to see app
   getMovies(token) {
-    axios.get('http://localhost:1234/movies', {
+    axios.get('https://eryn-moviedb.herokuapp.com/movies', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
@@ -43,12 +48,14 @@ export class MainView extends React.Component {
       });
   }
 
+  //Study this more - function for switching view between main and movie
   setSelectedMovie(newSelectedMovie) {
     this.setState({
       selectedMovie: newSelectedMovie
     });
   }
 
+  //function for authorizing logged in user
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
@@ -60,6 +67,7 @@ export class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
+  //when login is successful, stores login token locally
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
@@ -96,7 +104,7 @@ export class MainView extends React.Component {
             </Col>
             if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
             return movies.map(m => (
-              <Col md={3} key={m.id}>
+              <Col md={4} key={m.id}>
                 <MovieCard movie={m} />
               </Col>
             ))
@@ -104,7 +112,7 @@ export class MainView extends React.Component {
 
           <Route path="/register" render={() => {
             if (user) return <Redirect to="/" />
-            return <Col md={3}>
+            return <Col md={4}>
               <RegistrationView />
             </Col>
           }} />
@@ -121,8 +129,9 @@ export class MainView extends React.Component {
             <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             </Col>
+
             if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
-            return <Col md={8}>
+            return <Col md={4} className='justify-content-md-center'>
               <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
             </Col>
           }} />
@@ -132,8 +141,9 @@ export class MainView extends React.Component {
             <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             </Col>
+
             if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
-            return <Col md={8}>
+            return <Col md={8} className='justify-content-md-center'>
               <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} />
             </Col>
           }} />
@@ -143,6 +153,7 @@ export class MainView extends React.Component {
             <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             </Col>
+
             if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
             return <Col md={8}>
               <DirectorView genre={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />

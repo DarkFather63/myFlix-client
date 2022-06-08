@@ -1,8 +1,9 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { useState } from 'react';
+import useState from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Row, Col, Container, CardGroup, Card } from 'react-bootstrap';
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
@@ -70,37 +71,56 @@ export function RegistrationView(props) {
   }
 
   return (
-    <Form>
-      <Form.Group controlId="formUsername">
-        <Form.Label>
-          Username:
-        </Form.Label>
-        <Form.Control type="text" placeholder='Username' value={username} onChange={e => setUsername(e.target.value)} />
-        {usernameErr && <p>{usernameErr}</p>}
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>
-          Password:
-        </Form.Label>
-        <Form.Control type="password" placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
-        {passwordErr && <p>{passwordErr}</p>}
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>
-          Email:
-        </Form.Label>
-        <Form.Control type="email" placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
-        {emailErr && <p>{emailErr}</p>}
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>
-          Date of Birth:
-        </Form.Label>
-        <Form.Control type="date" placeholder='Date of Birth' value={date} onChange={e => setBirth(e.target.value)} />
-        {birthErr && <p>{birthErr}</p>}
-      </Form.Group>
-      <Button variant="primary" type="submit" onClick={handleSubmit}>Register</Button>
-    </Form>
+    <Container>
+      <Row>
+        <Col>
+          <CardGroup>
+            <Card>
+              <Card.Body>
+                <CardTitle>Register Here:</CardTitle>
+                <Form>
+
+                  <Form.Group controlId="formUsername">
+                    <Form.Label>
+                      Username:
+                    </Form.Label>
+                    <Form.Control type="text" placeholder='Username' value={username} onChange={e => setUsername(e.target.value)} />
+                    {usernameErr && <p>{usernameErr}</p>}
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label>
+                      Password:
+                    </Form.Label>
+                    <Form.Control type="password" placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
+                    {passwordErr && <p>{passwordErr}</p>}
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label>
+                      Email:
+                    </Form.Label>
+                    <Form.Control type="email" placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
+                    {emailErr && <p>{emailErr}</p>}
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label>
+                      Date of Birth:
+                    </Form.Label>
+                    <Form.Control type="date" placeholder='Date of Birth' value={date} onChange={e => setBirth(e.target.value)} />
+                    {birthErr && <p>{birthErr}</p>}
+                  </Form.Group>
+
+                  <Button variant="primary" type="submit" onClick={handleSubmit}>Register</Button>
+
+                </Form>
+              </Card.Body>
+            </Card>
+          </CardGroup>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
