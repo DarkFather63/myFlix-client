@@ -2891,12 +2891,12 @@ class MyFlixApplication extends (0, _reactDefault.default).Component {
             fluid: "md",
             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _mainView.MainView), {}, void 0, false, {
                 fileName: "src/index.jsx",
-                lineNumber: 19,
+                lineNumber: 17,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "src/index.jsx",
-            lineNumber: 18,
+            lineNumber: 16,
             columnNumber: 7
         }, this);
     }
