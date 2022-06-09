@@ -5,8 +5,8 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Link from 'react-bootstrap';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Route from 'react-router-dom';
-import Redirect from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 
 //Importing each view from their respective files (7 views so far)

@@ -36,7 +36,7 @@ export function LoginView(props) {
     e.preventDefault();
     const isReq = validate();
     if (isReq) {
-      axios.post('https://eryn-moviedb.herokuapp.com/users', {
+      axios.post('https://eryn-moviedb.herokuapp.com/login', {
         Username: username,
         Password: password
       })
