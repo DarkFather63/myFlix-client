@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import useState from 'react';
+import { useState } from 'react';
 //NOTE: when importing bootstrap functions/components, it works like the 'default' on your components - no curly braces needed
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -36,7 +36,7 @@ export function LoginView(props) {
     e.preventDefault();
     const isReq = validate();
     if (isReq) {
-      axios.post('https://eryn-moviedb.herokuapp.com/login', {
+      axios.post('https://eryn-moviedb.herokuapp.com/users', {
         Username: username,
         Password: password
       })

@@ -10,9 +10,9 @@ import Redirect from 'react-router-dom';
 
 
 //Importing each view from their respective files (7 views so far)
-import { MovieCard } from '../movie-card/movie-card';
-import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
+import { MovieView } from '../movie-view/movie-view';
+import { MovieCard } from '../movie-card/movie-card';
 import { RegistrationView } from '../registration-view/registration-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
@@ -20,7 +20,6 @@ import { ProfileView } from '../profile-view/profile-view';
 
 //exports this view to the main index.jsx file (then to index.html)
 export class MainView extends React.Component {
-
   //'Constructor' is the place to initialize a state's values - reps the moment a component is created in the memory.
   //'Super' is related to object oriented programming - often means call the constructor of the parent class, React.Component here.
   constructor() {

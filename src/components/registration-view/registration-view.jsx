@@ -1,6 +1,5 @@
 import React from 'react';
-import propTypes from 'prop-types';
-import useState from 'react';
+import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Row, Col, Container, CardGroup, Card } from 'react-bootstrap';
