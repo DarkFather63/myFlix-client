@@ -6,7 +6,7 @@ import Link from 'react-bootstrap';
 export class ProfileView extends React.Component {
 
   render() {
-    const { profile, onBackClick } = this.props;
+    const { user, onBackClick } = this.props;
     return (
       <div className='profile-view'>
         <div>
