@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap';
-import Link from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export class MovieView extends React.Component {
 
@@ -29,7 +29,7 @@ export class MovieView extends React.Component {
           <Link to={`/genres/${movie.Genre.Name}`}>
             <Button variant="link">Genre</Button>
           </Link>
-          <button onClick={() => { onBackClick(); }}>Back</button>
+          <button onClick={() => { onBackClick(null); }}>Back</button>
         </div>
       </Container>
     );

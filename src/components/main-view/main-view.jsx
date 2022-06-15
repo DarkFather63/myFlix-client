@@ -1,11 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import { Link, BrowserRouter as Router } from 'react-router-dom';
-import { Route } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { Row, Col, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { Route, Redirect, Link, BrowserRouter as Router } from 'react-router-dom';
 
 
 //Importing each view from their respective files (7 views so far)
@@ -89,10 +86,9 @@ export class MainView extends React.Component {
 
     return (
       <Router>
-
         <Row className='main-view justify-content-md-center'>
-
           <Button onClick={() => { this.onLoggedOut() }}>Logout</Button>
+
           <Link to={`/users/${user}`} >{user}</Link>
 
           <Route exact path="/" render={() => {
@@ -106,6 +102,14 @@ export class MainView extends React.Component {
                 <MovieCard movie={m} />
               </Col>
             ))
+          }} />
+
+          <Route exact path="/login" render={({ match }) => {
+
+            if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
+            return <Col md={8}>
+              <LoginView onBackClick={() => history.goBack()} />
+            </Col>
           }} />
 
           <Route path="/register" render={() => {
@@ -157,9 +161,8 @@ export class MainView extends React.Component {
               <DirectorView genre={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
             </Col>
           }} />
-
         </Row>
-      </Router>
+      </Router >
     );
   }
 }
