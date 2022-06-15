@@ -52,39 +52,38 @@ export function LoginView(props) {
 
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Card style={{ marginTop: 100, marginBottom: 50 }}>
-            <Card.Body>
-              <Card.Title style={{ textAlign: 'center', fontSize: '2rem' }}>Welcome to MyFlix!</Card.Title>
-              <Form className='login-border'>
 
-                <Form.Group controlId="formUsername">
-                  <Form.Label>Username:</Form.Label>
-                  <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
-                  {usernameErr && <p>{usernameErr}</p>}
-                </Form.Group>
+    <Row>
+      <Col>
+        <Card style={{ marginTop: 100, marginBottom: 50 }}>
+          <Card.Body>
+            <Card.Title style={{ textAlign: 'center', fontSize: '2rem' }}>Welcome to MyFlix!</Card.Title>
+            <Form className='login-border'>
 
-                <Form.Group controlId="formPassword">
-                  <Form.Label>Password:</Form.Label>
-                  <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-                  {passwordErr && <p>{passwordErr}</p>}
-                </Form.Group>
+              <Form.Group controlId="formUsername">
+                <Form.Label>Username:</Form.Label>
+                <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
+                {usernameErr && <p>{usernameErr}</p>}
+              </Form.Group>
 
-                <Button variant="primary" type="submit" onClick={handleSubmit}>
-                  Login
-                </Button>
+              <Form.Group controlId="formPassword">
+                <Form.Label>Password:</Form.Label>
+                <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                {passwordErr && <p>{passwordErr}</p>}
+              </Form.Group>
 
-                <Link to={`/register`}>
-                  <Button variant="link">Register</Button>
-                </Link>
+              <Button variant="primary" type="submit" onClick={handleSubmit}>
+                Login
+              </Button>
 
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container >
+              <Link to={`/register`}>
+                <Button variant="link">Register</Button>
+              </Link>
+
+            </Form>
+          </Card.Body>
+        </Card>
+      </Col>
+    </Row>
   );
 }

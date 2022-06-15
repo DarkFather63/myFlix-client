@@ -44,6 +44,7 @@ export class MainView extends React.Component {
   }
 
   //Study this more - function for switching view between main and movie
+  //Sets state of movie clicked to the appropriate movie response
   setSelectedMovie(newSelectedMovie) {
     this.setState({
       selectedMovie: newSelectedMovie
@@ -96,12 +97,7 @@ export class MainView extends React.Component {
             <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             </Col>
-            if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
-            return movies.map(m => (
-              <Col md={4} key={m.id}>
-                <MovieCard movie={m} />
-              </Col>
-            ))
+            if (movies.length === 0) return <div className='main-view'></div>;
           }} />
 
           <Route exact path="/login" render={({ match }) => {
