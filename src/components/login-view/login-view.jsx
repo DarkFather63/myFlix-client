@@ -1,9 +1,10 @@
+import './login-view.scss'
 import React, { useState } from 'react';
 import axios from 'axios';
 //NOTE: when importing bootstrap functions/components, it works like the 'default' on your components - no curly braces needed
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Row, Col, Container, Card } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 
@@ -72,7 +73,7 @@ export function LoginView(props) {
                 {passwordErr && <p>{passwordErr}</p>}
               </Form.Group>
 
-              <Button variant="primary" type="submit" onClick={handleSubmit}>
+              <Button className='btn' variant="primary" type="submit" onClick={handleSubmit}>
                 Login
               </Button>
 

@@ -27,6 +27,14 @@ export class MainView extends React.Component {
     };
   }
 
+  //Study this more - function for switching view between main and movie
+  //Sets state of movie clicked to the appropriate movie response
+  setSelectedMovie(newSelectedMovie) {
+    this.setState({
+      selectedMovie: newSelectedMovie
+    });
+  }
+
   //'GETs' movies from database (link to app), adds authorization so no one can simply enter endpoints
   //Have to log in to see app
   getMovies(token) {
@@ -43,13 +51,6 @@ export class MainView extends React.Component {
       });
   }
 
-  //Study this more - function for switching view between main and movie
-  //Sets state of movie clicked to the appropriate movie response
-  setSelectedMovie(newSelectedMovie) {
-    this.setState({
-      selectedMovie: newSelectedMovie
-    });
-  }
 
   //function for authorizing logged in user
   onLoggedIn(authData) {
@@ -88,7 +89,7 @@ export class MainView extends React.Component {
     return (
       <Router>
         <Row className='main-view justify-content-md-center'>
-          <Button onClick={() => { this.onLoggedOut() }}>Logout</Button>
+          <LoginView />
 
           <Link to={`/users/${user}`} >{user}</Link>
 
@@ -101,7 +102,6 @@ export class MainView extends React.Component {
           }} />
 
           <Route exact path="/login" render={({ match }) => {
-
             if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
             return <Col md={8}>
               <LoginView onBackClick={() => history.goBack()} />
@@ -131,6 +131,7 @@ export class MainView extends React.Component {
             if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
             return <Col md={4} className='justify-content-md-center'>
               <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
+              <Button onClick={() => { this.onLoggedOut() }}>Logout</Button>
             </Col>
           }} />
 

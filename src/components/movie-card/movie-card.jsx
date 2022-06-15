@@ -1,3 +1,4 @@
+import './movie-card.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
@@ -32,8 +33,7 @@ MovieCard.propTypes = {
     }),
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
-      Bio: PropTypes.string.isRequired,
-      Birth: PropTypes.date.isRequired
+      Bio: PropTypes.string.isRequired
     }),
     Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired

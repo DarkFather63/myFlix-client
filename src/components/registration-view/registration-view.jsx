@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Row, Col, Container, CardGroup, Card } from 'react-bootstrap';
+import { Row, Col, CardGroup, Card } from 'react-bootstrap';
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
@@ -34,7 +34,7 @@ export function RegistrationView(props) {
     if (!email) {
       setEmailErr('Please use a valid email');
       isReq = false;
-    } else if (email.inputText.value !== (mail)) {
+    } else if (email.inputText.value !== (email)) {
       setEmail('Please use a valid email');
       isReq = false;
     }
@@ -75,7 +75,7 @@ export function RegistrationView(props) {
         <CardGroup>
           <Card>
             <Card.Body>
-              <CardTitle>Register Here:</CardTitle>
+              <Card.Title>Register Here:</Card.Title>
               <Form>
 
                 <Form.Group controlId="formUsername">
@@ -106,7 +106,7 @@ export function RegistrationView(props) {
                   <Form.Label>
                     Date of Birth:
                   </Form.Label>
-                  <Form.Control type="date" placeholder='Date of Birth' value={date} onChange={e => setBirth(e.target.value)} />
+                  <Form.Control type="date" placeholder='Date of Birth' onChange={e => setBirth(e.target.value)} />
                   {birthErr && <p>{birthErr}</p>}
                 </Form.Group>
 
