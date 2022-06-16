@@ -89,15 +89,26 @@ export class MainView extends React.Component {
     return (
       <Router>
         <Row className='main-view justify-content-md-center'>
-          <LoginView />
 
           <Link to={`/users/${user}`} >{user}</Link>
 
           <Route exact path="/" render={() => {
-            if (!user) return
-            <Col>
-              <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-            </Col>
+            if (!user) return (
+              <Col>
+                <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+              </Col>
+            )
+            if (user) return (
+              <Col md={4} className='justify-content-md-center'>
+                {
+                  movies.map((movie) => {
+                    return <MovieCard movie={movie} onBackClick={this.setSelectedMovie} />
+                  })
+                }
+
+                <Button onClick={() => { this.onLoggedOut() }}>Logout</Button>
+              </Col>
+            )
             if (movies.length === 0) return <div className='main-view'></div>;
           }} />
 
@@ -119,19 +130,6 @@ export class MainView extends React.Component {
             if (!user) return <Redirect to="/" />
             return <Col>
               <ProfileView user={user} onBackClick={() => history.goBack()} />
-            </Col>
-          }} />
-
-          <Route path="/movies" render={({ match }) => {
-            if (!user) return
-            <Col>
-              <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-            </Col>
-
-            if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
-            return <Col md={4} className='justify-content-md-center'>
-              <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
-              <Button onClick={() => { this.onLoggedOut() }}>Logout</Button>
             </Col>
           }} />
 

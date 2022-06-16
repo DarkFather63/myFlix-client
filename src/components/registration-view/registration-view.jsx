@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Row, Col, CardGroup, Card } from 'react-bootstrap';
+import * as axios from 'axios';
 
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
@@ -34,15 +35,9 @@ export function RegistrationView(props) {
     if (!email) {
       setEmailErr('Please use a valid email');
       isReq = false;
-    } else if (email.inputText.value !== (email)) {
-      setEmail('Please use a valid email');
-      isReq = false;
     }
     if (!birth) {
       setBirthErr('DOB required');
-      isReq = false;
-    } else if (birth !== Date()) {
-      setBirth('Please enter a date in MM/DD/YYYY format');
       isReq = false;
     }
     return isReq;
@@ -50,7 +45,7 @@ export function RegistrationView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isReq = validate();
+    const isReq = validate()
     if (isReq) {
       axios.post('https://eryn-moviedb.herokuapp.com/users', {
         Username: username,
