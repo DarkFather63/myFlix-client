@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export class MovieView extends React.Component {
 
   render() {
-    const { movie } = this.props;
+    const { movie, onBackClick } = this.props;
+    console.log(movie)
     return (
       <div className='movie-view'>
         <div className='movie-poster'>

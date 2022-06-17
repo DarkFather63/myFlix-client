@@ -26,7 +26,7 @@ export class DirectorView extends React.Component {
         <Link to={`/genres/${movie.Genre.Name}`}>
           <Button variant="link">Genre</Button>
         </Link>
-        <button onClick={() => { onBackClick(); }}>Back</button>
+        <button onClick={() => { onBackClick(null); }}>Back</button>
       </div>
     );
   }

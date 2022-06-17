@@ -77,9 +77,7 @@ export function LoginView(props) {
                 Login
               </Button>
 
-              <Link to={`/register`}>
-                <Button variant="link">Register</Button>
-              </Link>
+              <p>Not a user?<Link to={`/register`}>Register Here</Link></p>
 
             </Form>
           </Card.Body>
