@@ -14,7 +14,7 @@ import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import ProfileView from '../profile-view/profile-view.jsx';
 import { MyNavbar } from '../navbar/navbar';
-f
+
 //exports this view to the main index.jsx file (then to index.html)
 export class MainView extends React.Component {
   //'Constructor' is the place to initialize a state's values - reps the moment a component is created in the memory.
