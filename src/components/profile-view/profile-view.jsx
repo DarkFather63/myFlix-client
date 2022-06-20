@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button, { Card, CardGroup, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
-import UserInfo from './user-info';
+import { UserInfo } from './user-info';
 import { FavoriteMovies } from './favorite-movies';
 import { UserUpdate } from '../profile-edit-view/profile-edit-view';
 
@@ -11,11 +11,11 @@ export function ProfileView(props) {
 
   const [user, setUser] = useState({});
   const [movie, setMovie] = useState('');
-  /* const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   const favoriteMovieList = favoriteMovies.filter(m => {
     return favoriteMoviesId.includes(m._id)
-  }) */
+  })
 
   const getUser = () => {
     axios.get(`https://eryn-moviedb.herokuapp.com/users/${currentUser}`, {
@@ -96,8 +96,8 @@ export function ProfileView(props) {
           </Col>
         </CardGroup>
 
-        {/* <FavoriteMovies favoriteMovieList={favoriteMovieList} />
- */}
+        <FavoriteMovies favoriteMovieList={favoriteMovieList} />
+
 
         <Link to={`/users-update/${user}`}>
           <Button variant="link">Update Profile</Button>

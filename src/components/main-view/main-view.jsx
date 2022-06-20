@@ -12,7 +12,7 @@ import { MovieCard } from '../movie-card/movie-card';
 import { RegistrationView } from '../registration-view/registration-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
-import { ProfileView } from '../profile-view/profile-view.jsx';
+import ProfileView from '../profile-view/profile-view.jsx';
 import { MyNavbar } from '../navbar/navbar';
 
 //exports this view to the main index.jsx file (then to index.html)
