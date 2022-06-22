@@ -1,19 +1,22 @@
 import React from 'react';
 import axios from 'axios';
-import { Row, Col, Button } from 'react-bootstrap';
-import PropTypes from 'prop-types';
-import { Route, Redirect, Link, BrowserRouter as Router } from 'react-router-dom';
+// import PropTypes from 'prop-types';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
-//Importing each view from their respective files (7 views so far)
+
+//Importing each view from their respective files 
 import { LoginView } from '../login-view/login-view';
-import { MovieView } from '../movie-view/movie-view';
-import { MovieCard } from '../movie-card/movie-card';
 import { RegistrationView } from '../registration-view/registration-view';
+import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
-import ProfileView from '../profile-view/profile-view.jsx';
 import { MyNavbar } from '../navbar/navbar';
+import { MovieCard } from '../movie-card/movie-card';
+import ProfileView from '../profile-view/profile-view.jsx';
 
 //exports this view to the main index.jsx file (then to index.html)
 export class MainView extends React.Component {
@@ -28,12 +31,27 @@ export class MainView extends React.Component {
     };
   }
 
-  //Study this more - function for switching view between main and movie
-  //Sets state of movie clicked to the appropriate movie response
-  setSelectedMovie(newSelectedMovie) {
+  //when login is successful, stores login token locally
+  componentDidMount() {
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user')
+      });
+      this.getMovies(accessToken);
+    }
+  }
+
+  //function for authorizing logged in user
+  onLoggedIn(authData) {
+    console.log(authData);
     this.setState({
-      selectedMovie: newSelectedMovie
+      user: authData.user.Username
     });
+
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
+    this.getMovies(authData.token);
   }
 
   //'GETs' movies from database (link to app), adds authorization so no one can simply enter endpoints
@@ -53,28 +71,14 @@ export class MainView extends React.Component {
   }
 
 
-  //function for authorizing logged in user
-  onLoggedIn(authData) {
-    console.log(authData);
+  //Study this more - function for switching view between main and movie
+  //Sets state of movie clicked to the appropriate movie response
+  setSelectedMovie(newSelectedMovie) {
     this.setState({
-      user: authData.user.Username
+      selectedMovie: newSelectedMovie
     });
-
-    localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.user.Username);
-    this.getMovies(authData.token);
   }
 
-  //when login is successful, stores login token locally
-  componentDidMount() {
-    let accessToken = localStorage.getItem('token');
-    if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem('user')
-      });
-      this.getMovies(accessToken);
-    }
-  }
 
   onLoggedOut() {
     localStorage.removeItem('token');
@@ -130,7 +134,7 @@ export class MainView extends React.Component {
           <Route path={`/users/${user}`} render={({ history }) => {
             if (!user) return <Redirect to="/" />
             return <Col>
-              <ProfileView user={user} onBackClick={() => history.goBack()} />
+              <ProfileView movies={movies} user={user} onBackClick={() => history.goBack()} />
             </Col>
           }} />
 
@@ -151,7 +155,7 @@ export class MainView extends React.Component {
             if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
 
             return <Col md={8} className='justify-content-md-center'>
-              <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
+              <MovieView movie={movies.find(m => m._id === match.params.id)} onBackClick={() => history.goBack()} />
               <Button onClick={() => { this.onLoggedOut() }}>Logout</Button>
             </Col>
           }} />
@@ -165,7 +169,7 @@ export class MainView extends React.Component {
             if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
 
             return <Col md={8} className='justify-content-md-center'>
-              <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} />
+              <GenreView movie={movies.find(m => m.Genre.Name === match.params.name)} onBackClick={() => history.goBack()} />
             </Col>
           }} />
 
@@ -178,7 +182,7 @@ export class MainView extends React.Component {
             if (movies.length === 0) return <div className='main-view'>There are no movies here</div>;
 
             return <Col md={8}>
-              <DirectorView genre={movies.find(m => m.Director.Name === match.params.name).Director} onBackClick={() => history.goBack()} />
+              <DirectorView movie={movies.find(m => m.Director.Name === match.params.name)} onBackClick={() => history.goBack()} />
             </Col>
           }} />
         </Row>

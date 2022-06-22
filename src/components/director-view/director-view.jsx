@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
-import Link from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export class DirectorView extends React.Component {
 
@@ -10,14 +10,14 @@ export class DirectorView extends React.Component {
     return (
       <div className='director-view'>
         <div className='headshot'>
-          <img src={director.ImagePath} />
+          <img src={movie.ImagePath} />
         </div>
         <div className='director-name'>
-          <span className='value'>{director.Name}</span>
+          <span className='value'>{movie.Director.Name}</span>
         </div>
         <div className='director-bio'>
           <span className='label'>Biography:</span>
-          <span className='value'>{director.Bio}</span>
+          <span className='value'>{movie.Director.Bio}</span>
         </div>
         <Link to={`/movies/:movieId`}>
           <Button variant="link">Movies</Button>

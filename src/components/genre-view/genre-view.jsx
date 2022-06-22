@@ -1,23 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
-import Link from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export class GenreView extends React.Component {
 
   render() {
-    const { genre, onBackClick } = this.props;
+    const { movie, onBackClick } = this.props;
+    console.log(movie)
     return (
       <div className='genre-view'>
         <div className='genre-image'>
-          <img src={genre.ImagePath} />
+          <img src={movie.ImagePath} />
         </div>
         <div className='genre-name'>
-          <span className='value'>{genre.Name}</span>
+          <span className='value'>{movie.Genre.Name}</span>
         </div>
         <div className='genre-definition'>
           <span className='label'>Definition:</span>
-          <span className='value'>{genre.Definition}</span>
+          <span className='value'>{movie.Genre.Description}</span>
         </div>
         <Link to={`/directors/${movie.Director.Name}`}>
           <Button variant="link">Director</Button>
@@ -33,9 +34,18 @@ export class GenreView extends React.Component {
 }
 
 GenreView.propTypes = {
-  genre: PropTypes.shape({
-    Name: PropTypes.string.isRequired,
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired
+    }),
+    Director: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Bio: PropTypes.string.isRequired
+    }),
     Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  onBackClick: PropTypes.func.isRequired
 };

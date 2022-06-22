@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import Button, { Card, CardGroup, Col, Row } from 'react-bootstrap';
-import { Link, BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { Button, Card, CardGroup, Col, Row } from 'react-bootstrap';
+import { Link, BrowserRouter as Router } from 'react-router-dom';
+
 import { UserInfo } from './user-info';
 import { FavoriteMovies } from './favorite-movies';
 import { UserUpdate } from '../profile-edit-view/profile-edit-view';
@@ -18,14 +19,17 @@ export function ProfileView(props) {
   })
 
   const getUser = () => {
-    axios.get(`https://eryn-moviedb.herokuapp.com/users/${currentUser}`, {
+    const token = localStorage.getItem('token')
+    axios.get(`https://eryn-moviedb.herokuapp.com/users/${props.user}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
         setUser(response.data);
         setFavoriteMovies(response.data.FavoriteMovies)
       })
-      .catch(error => console.error(error))
+      .catch(error => console.error(error),
+        console.log(error),
+        console.log('get user error'))
   }
 
   useEffect(() => {
@@ -36,22 +40,31 @@ export function ProfileView(props) {
     e.preventDefault();
     const isReq = validate()
     if (isReq) {
-      axios.put('https://eryn-moviedb.herokuapp.com/users', {
-        Name: name,
-        Username: username,
-        Password: password,
-        Email: email,
-        Birthday: birthday
-      })
-        .then(response => {
-          const data = response.data;
-          console.log(data);
-          alert('Update successful!')
-          window.open('/', '_self');
+      axios.put(`https://eryn-moviedb.herokuapp.com/users/${props.user}`, {
+        Name: this.state.name,
+        Username: this.state.username,
+        Password: this.state.password,
+        Email: this.state.email,
+        Birthday: this.state.birthday
+      },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+        .then((response) => {
+          this.setState({
+            username: response.data.Username,
+            password: response.data.Password,
+            email: response.data.Email,
+            birthday: response.data.Birthday
+          });
+
+          localStorage.setItem('user', this.state.Username);
+          alert('Profile updated.');
         })
-        .catch(response => {
-          console.error(response);
-          alert('Unable to update');
+        .catch(function (error) {
+          console.log(error);
+          alert('Unable to update.');
         });
     }
   };
@@ -99,13 +112,13 @@ export function ProfileView(props) {
         <FavoriteMovies favoriteMovieList={favoriteMovieList} />
 
 
-        <Link to={`/users-update/${user}`}>
+        <Link to={`/users-update/${user.Username}`}>
           <Button variant="link">Update Profile</Button>
         </Link>
 
-        <Link to={`/movies/${movie._id}`}>
+        {/* <Link to={`/movies/${movie._id}`}>
           <Button variant="link">Movies Main page</Button>
-        </Link>
+        </Link> */}
 
         <button onBackClick={() => history.goBack()}>Back</button>
       </Card>
