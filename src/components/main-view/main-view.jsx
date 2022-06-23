@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,6 +8,9 @@ import Button from 'react-bootstrap/Button';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
+import { setMovies } from '../../actions/actions';
+
+import MoviesList from '../movies-list/movies-list';
 
 //Importing each view from their respective files 
 import { LoginView } from '../login-view/login-view';
@@ -15,18 +19,16 @@ import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { MyNavbar } from '../navbar/navbar';
-import { MovieCard } from '../movie-card/movie-card';
-import ProfileView from '../profile-view/profile-view.jsx';
+import { ProfileView } from '../profile-view/profile-view.jsx';
 
 //exports this view to the main index.jsx file (then to index.html)
-export class MainView extends React.Component {
+class MainView extends React.Component {
   //'Constructor' is the place to initialize a state's values - reps the moment a component is created in the memory.
   //'Super' is related to object oriented programming - often means call the constructor of the parent class, React.Component here.
   constructor() {
     super();
+
     this.state = {
-      movies: [],
-      selectedMovie: null,
       user: null
     };
   }
@@ -42,6 +44,20 @@ export class MainView extends React.Component {
     }
   }
 
+  //'GETs' movies from database (link to app), adds authorization so no one can simply enter endpoints
+  //Have to log in to see app
+  getMovies(token) {
+    axios.get('https://eryn-moviedb.herokuapp.com/movies', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => {
+        this.props.setMovies(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   //function for authorizing logged in user
   onLoggedIn(authData) {
     console.log(authData);
@@ -53,23 +69,6 @@ export class MainView extends React.Component {
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
   }
-
-  //'GETs' movies from database (link to app), adds authorization so no one can simply enter endpoints
-  //Have to log in to see app
-  getMovies(token) {
-    axios.get('https://eryn-moviedb.herokuapp.com/movies', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(response => {
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
 
   //Study this more - function for switching view between main and movie
   //Sets state of movie clicked to the appropriate movie response
@@ -89,7 +88,8 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
+    let { movies } = this.props;
+    let { user } = this.state;
 
     return (
       <Router>
@@ -105,14 +105,10 @@ export class MainView extends React.Component {
 
             if (movies.length === 0) return <div className='main-view'></div>;
 
+
             if (user) return (
               <Col md={3} lg={4} key={movies._id}>
-                {
-                  movies.map((movie) => {
-                    return <MovieCard movie={movie} onBackClick={this.setSelectedMovie} />
-                  })
-                }
-
+                <MoviesList movies={movies} />;
               </Col>
             )
           }} />
@@ -190,3 +186,9 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+export default connect(mapStateToProps, { setMovies })(MainView);
