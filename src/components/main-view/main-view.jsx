@@ -15,11 +15,11 @@ import MoviesList from '../movies-list/movies-list';
 //Importing each view from their respective files 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
+import ProfileView from '../profile-view/profile-view';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { MyNavbar } from '../navbar/navbar';
-import { ProfileView } from '../profile-view/profile-view.jsx';
 
 //exports this view to the main index.jsx file (then to index.html)
 class MainView extends React.Component {
@@ -107,8 +107,8 @@ class MainView extends React.Component {
 
 
             if (user) return (
-              <Col md={3} lg={4} key={movies._id}>
-                <MoviesList movies={movies} />;
+              <Col md={9} sm={4} >
+                <MoviesList movies={movies} key={movies._id} />;
               </Col>
             )
           }} />
@@ -127,20 +127,25 @@ class MainView extends React.Component {
             </Col>
           }} />
 
-          <Route path={`/users/${user}`} render={({ history }) => {
-            if (!user) return <Redirect to="/" />
+          <Route path='/users/:username' render={({ history, match }) => {
+            if (!user) return (
+              <Col>
+                <LoginView movies={movies} onLoggedIn={user => this.onLoggedIn(user)} />;
+              </Col>
+            )
+
             return <Col>
-              <ProfileView movies={movies} user={user} onBackClick={() => history.goBack()} />
+              <ProfileView onBackClick={() => history.goBack()} movies={movies} user={user} />
             </Col>
           }} />
 
-          <Route path={`/user-update/${user}`} render={({ history }) => {
+          {/* <Route path={`/user-update/${user}`} render={({ history }) => {
             if (!user) return <Redirect to="/" />
             if (movies.length === 0) return <div className='main-view'></div>;
             return <Col>
               <UserUpdate user={user} onBackClick={() => history.goBack()} />
             </Col>
-          }} />
+          }} /> */}
 
           <Route path="/movies/:id" render={({ match, history }) => {
             if (!user) return
@@ -152,7 +157,7 @@ class MainView extends React.Component {
 
             return <Col md={8} className='justify-content-md-center'>
               <MovieView movie={movies.find(m => m._id === match.params.id)} onBackClick={() => history.goBack()} />
-              <Button onClick={() => { this.onLoggedOut() }}>Logout</Button>
+
             </Col>
           }} />
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
+import { Button, Col, Row, Card, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export class MovieView extends React.Component {
@@ -9,27 +9,46 @@ export class MovieView extends React.Component {
     const { movie, onBackClick } = this.props;
     console.log(movie)
     return (
-      <div className='movie-view'>
-        <div className='movie-poster'>
-          <img src={movie.ImagePath} />
-        </div>
-        <div className='movie-title'>
-          <span className='label'>Title:</span>
-          <span className='value'>{movie.Title}</span>
-        </div>
-        <div className='movie-description'>
-          <span className='label'>Description:</span>
-          <span className='value'>{movie.Description}</span>
-        </div>
-        <Link to={`/directors/${movie.Director.Name}`}>
-          <Button variant="link">Director</Button>
-        </Link>
+      <Container>
+        <Button variant='secondary' style={{ marginTop: 10, marginBottom: 10 }} onClick={() => { onBackClick(null); }}>Back</Button>
+        <Row>
+          <Col>
+            <Card className='movie-view' style={{ marginTop: 50, marginBottom: 30, padding: 10 }}>
+              <Card.Title className='movie-title'>
+                <span className='value' style={{ textAlign: 'center', fontSize: '2rem' }}>{movie.Title}</span>
+              </Card.Title>
 
-        {/*  <Link to={`/genres/${movie.Genre.Name}`}>
-          <Button variant="link">Genre</Button>
-        </Link> */}
-        <button onClick={() => { onBackClick(null); }}>Back</button>
-      </div>
+              <div className='movie-poster' />
+              <img src={movie.ImagePath} />
+
+
+              <div className='movie-description'>
+                <span className='value'>{movie.Description}</span>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <Link to={`/directors/${movie.Director.Name}`}>
+              <Button variant="link">Director</Button>
+            </Link>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <Link to={`/genres/${movie.Genre.Name}`}>
+              <Button variant="link">Genre</Button>
+            </Link>
+          </Col>
+        </Row>
+
+
+
+
+      </Container >
     );
   }
 }

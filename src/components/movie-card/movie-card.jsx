@@ -11,7 +11,7 @@ export class MovieCard extends React.Component {
 
     return (
       <Card className="movie-card">
-        <Card.Img variant="top" src={movie.ImagePath} />
+        <Card.Img variant="top" src={movie.ImagePath} style={{ padding: 10 }} />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Subtitle>{movie.Genre.Name}</Card.Subtitle>

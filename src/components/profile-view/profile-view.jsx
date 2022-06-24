@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import { Button, Card, CardGroup, Col, Row } from 'react-bootstrap';
-import { Link, BrowserRouter as Router } from 'react-router-dom';
 
 import { UserInfo } from './user-info';
-import { FavoriteMovies } from './favorite-movies';
+import FavoriteMovies from './favorite-movies';
 import { UserUpdate } from '../profile-edit-view/profile-edit-view';
+import PropTypes from 'prop-types';
 
 export function ProfileView(props) {
 
-  const [user, setUser] = useState({});
-  const [movie, setMovie] = useState('');
+  const [user, setUser] = useState(props.user);
+  const [movies, setMovies] = useState(props.movies);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
-
-  const favoriteMovieList = favoriteMovies.filter(m => {
-    return favoriteMoviesId.includes(m._id)
-  })
+  const token = localStorage.getItem('token');
+  const currentUser = localStorage.getItem('user');
 
   const getUser = () => {
-    const token = localStorage.getItem('token')
     axios.get(`https://eryn-moviedb.herokuapp.com/users/${props.user}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
         setUser(response.data);
-        setFavoriteMovies(response.data.FavoriteMovies)
+        setFavoriteMovies(response.data.favoriteMovies)
       })
       .catch(error => console.error(error),
         console.log(error),
@@ -36,40 +32,58 @@ export function ProfileView(props) {
     getUser();
   }, [])
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    const isReq = validate()
-    if (isReq) {
-      axios.put(`https://eryn-moviedb.herokuapp.com/users/${props.user}`, {
-        Name: this.state.name,
-        Username: this.state.username,
-        Password: this.state.password,
-        Email: this.state.email,
-        Birthday: this.state.birthday
-      },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-        .then((response) => {
-          this.setState({
-            username: response.data.Username,
-            password: response.data.Password,
-            email: response.data.Email,
-            birthday: response.data.Birthday
-          });
+  const deleteUser = () => {
 
-          localStorage.setItem('user', this.state.Username);
-          alert('Profile updated.');
-        })
-        .catch(function (error) {
-          console.log(error);
-          alert('Unable to update.');
-        });
-    }
-  };
+    axios.delete(`https://eryn-moviedb.herokuapp.com/users/${props.user}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => {
+        console.log(response);
+        alert('Profile deleted');
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        window.open('/', '_self');
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log('Unable to delete profile')
+      });
+  }
 
-  const handleSubmit = (e) => {
+  /*  const handleUpdate = (e) => {
+     e.preventDefault();
+     const isReq = validate()
+     if (isReq) {
+       axios.put(`https://eryn-moviedb.herokuapp.com/users/${props.user}`, {
+         Name: this.state.name,
+         Username: this.state.username,
+         Password: this.state.password,
+         Email: this.state.email,
+         Birthday: this.state.birthday
+       },
+         {
+           headers: { Authorization: `Bearer ${token}` },
+         }
+       )
+         .then((response) => {
+           this.setState({
+             username: response.data.Username,
+             password: response.data.Password,
+             email: response.data.Email,
+             birthday: response.data.Birthday
+           });
+ 
+           localStorage.setItem('user', this.state.Username);
+           alert('Profile updated.');
+         })
+         .catch(function (error) {
+           console.log(error);
+           alert('Unable to update.');
+         });
+     }
+   }; */
+
+  /* const handleSubmit = (e) => {
     e.preventDefault();
     const isReq = validate();
     if (isReq) {
@@ -86,43 +100,43 @@ export function ProfileView(props) {
           console.log('no such user')
         });
     }
-  };
+  }; */
 
   return (
-    <Row>
-      <Card className='profile-view'>
-        <CardGroup key={user}>
-          <Col xs={12} sm={4}>
-            <Card>
+    <Container>
+      <Button variant='secondary' style={{ marginTop: 10, marginBottom: 10 }} onBackClick={() => history.goBack()}>Back</Button>
+      <Row>
+        <Card className='profile-view'>
+          <CardGroup key={user}>
+            <Col xs={12} sm={4}>
+
               <Card.Body>
                 <UserInfo name={user.Username} email={user.Email} />
               </Card.Body>
-            </Card>
-          </Col>
 
-          <Col xs={12} sm={8}>
-            <Card>
-              <Card.Body>
-                <UserUpdate handleSubmit={handleSubmit} handleUpdate={handleUpdate} />
-              </Card.Body>
-            </Card>
-          </Col>
-        </CardGroup>
+            </Col>
+          </CardGroup>
+        </Card>
+      </Row>
 
-        <FavoriteMovies favoriteMovieList={favoriteMovieList} />
+      <Row>
+        <Col xs={12} sm={8}>
+          <Card>
+            <Card.Body>
+              <UserUpdate user={user} />
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row>
+        <FavoriteMovies movies={movies} favoriteMovies={favoriteMovies} currentUser={currentUser} token={token} />
+      </Row>
+
+      <Button className='delete-button' onClick={() => deleteUser()}>Delete Profile</Button>
 
 
-        <Link to={`/users-update/${user.Username}`}>
-          <Button variant="link">Update Profile</Button>
-        </Link>
 
-        {/* <Link to={`/movies/${movie._id}`}>
-          <Button variant="link">Movies Main page</Button>
-        </Link> */}
-
-        <button onBackClick={() => history.goBack()}>Back</button>
-      </Card>
-
-    </Row>
+    </Container>
   );
 }

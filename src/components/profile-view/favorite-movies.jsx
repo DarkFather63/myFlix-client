@@ -1,16 +1,22 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Figure, Row, Col, Button, Card } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import './profile-view.scss';
 
-function FavoriteMovies({ favoriteMovieList }) {
+function FavoriteMovies(props) {
+  const { movie, favoriteMovies, currentUser, token } = props;
 
   const favoriteMoviesId = favoriteMovies.map(m => m._id)
 
-  const removeFav = (id) => {
+  const favoriteMovieList = favoriteMovies.filter(m => {
+    return favoriteMoviesId.includes(m._id)
+  })
+
+  const removeFav = (_id) => {
     let token = localStorage.getItem('token');
-    let url = `https//eryn-moviedb.herokuapp.com/users/${localStorage.getItem('user')}/movies/${id}`;
+    let url = `https//eryn-moviedb.herokuapp.com/users/${currentUser}/movies/${_id}`;
     axios.delete(url, {
       headers: { Authorization: `Bearer ${token}` },
     })
