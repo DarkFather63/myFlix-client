@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Card, CardGroup, Col, Row } from 'react-bootstrap';
+import { Button, Card, CardGroup, Col, Row, Container } from 'react-bootstrap';
 
 import { UserInfo } from './user-info';
 import FavoriteMovies from './favorite-movies';
@@ -23,9 +23,11 @@ export function ProfileView(props) {
         setUser(response.data);
         setFavoriteMovies(response.data.favoriteMovies)
       })
-      .catch(error => console.error(error),
-        console.log(error),
-        console.log('get user error'))
+      .catch(function (err) {
+        console.log(err);
+        console.log('get user error');
+        console.log(err.response.data);
+      });
   }
 
   useEffect(() => {

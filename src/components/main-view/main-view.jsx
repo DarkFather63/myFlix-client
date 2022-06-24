@@ -15,7 +15,7 @@ import MoviesList from '../movies-list/movies-list';
 //Importing each view from their respective files 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import ProfileView from '../profile-view/profile-view';
+import { ProfileView } from '../profile-view/profile-view';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';

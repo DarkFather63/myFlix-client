@@ -8,10 +8,10 @@ import './profile-view.scss';
 function FavoriteMovies(props) {
   const { movie, favoriteMovies, currentUser, token } = props;
 
-  const favoriteMoviesId = favoriteMovies.map(m => m._id)
+  const favoriteMoviesId = favoriteMovies.map(movie => movie._id)
 
-  const favoriteMovieList = favoriteMovies.filter(m => {
-    return favoriteMoviesId.includes(m._id)
+  const favoriteMoviesList = favoriteMovies.filter(m => {
+    return favoriteMoviesId.includes(movie._id)
   })
 
   const removeFav = (_id) => {
@@ -29,9 +29,9 @@ function FavoriteMovies(props) {
 
   return (
     <Fragment>
-      {favoriteMovieList.length === 0
+      {favoriteMoviesList.length === 0
         ? (<p>You have no favorite movies yet.</p>)
-        : favoriteMovieList.map((movie) => {
+        : favoriteMoviesList((movies) => {
           return (
 
             <Card>

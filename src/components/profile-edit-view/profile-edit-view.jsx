@@ -180,10 +180,10 @@ export class UserUpdate extends React.Component {
 }
 
 
-UserUpdate.propTypes = {
-  profile: PropTypes.shape({
+/* UserUpdate.propTypes = {
+  user: PropTypes.shape({
     Name: PropTypes.string.isRequired,
     Bio: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired
   }).isRequired
-};
+}; */
