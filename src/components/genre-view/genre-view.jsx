@@ -33,13 +33,13 @@ export class GenreView extends React.Component {
 
         <Row>
           <Link to={`/directors/${movie.Director.Name}`}>
-            <Button variant="link">Director</Button>
+            <Button variant="secondary">Director</Button>
           </Link>
         </Row>
 
         <Row>
           <Link to={`/movies/${movie._id}`}>
-            <Button variant="link">Movies</Button>
+            <Button variant="secondary">Movies</Button>
           </Link>
         </Row>
 

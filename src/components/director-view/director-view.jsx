@@ -32,13 +32,13 @@ export class DirectorView extends React.Component {
         <Row>
           <Col>
             <Link to={`/`}>
-              <Button variant="link">Movies</Button>
+              <Button variant="secondary">Movies</Button>
             </Link>
           </Col>
         </Row>
 
         <Link to={`/genres/${movie.Genre.Name}`}>
-          <Button variant="link">Genre</Button>
+          <Button variant="secondary">Genre</Button>
         </Link>
 
       </Container>

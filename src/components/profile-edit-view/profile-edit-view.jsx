@@ -44,42 +44,42 @@ export class UserUpdate extends React.Component {
       });
   }
 
+
   handleUpdate = (e) => {
     e.preventDefault();
 
     const Username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
-    const isReq = validate()
-    if (isReq) {
-      axios.put(`https://eryn-moviedb.herokuapp.com/users/${Username}`, {
 
-        Name: this.state.Name,
-        Username: this.state.Username,
-        Email: this.state.Email,
-        Birthday: this.state.Birthday
+    axios.put(`https://eryn-moviedb.herokuapp.com/users/${Username}`, {
 
-      },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-        .then((response) => {
-          this.setState({
-            username: response.data.Username,
-            password: response.data.Password,
-            email: response.data.Email,
-            birthday: response.data.Birthday
-          });
 
-          localStorage.setItem('user', this.state.Username);
-          alert('Profile updated.');
-        })
-        .catch(function (error) {
-          console.log(error);
-          alert('Unable to update.');
+      Username: this.state.Username,
+      Email: this.state.Email,
+      Birthday: this.state.Birthday
+
+    },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+      .then((response) => {
+        this.setState({
+          username: response.data.Username,
+          password: response.data.Password,
+          email: response.data.Email,
+          birthday: response.data.Birthday
         });
-    }
+
+        localStorage.setItem('user', this.state.Username);
+        alert('Profile updated.');
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert('Unable to update.');
+      });
+
   };
 
   setUsername(value) {
@@ -87,12 +87,6 @@ export class UserUpdate extends React.Component {
       Username: value
     });
   }
-
-  /* setName(value) {
-    this.setState({
-      Name: value
-    });
-  } */
 
   setEmail(value) {
     this.setState({
@@ -120,7 +114,7 @@ export class UserUpdate extends React.Component {
       <Row>
         <Col md={8}>
           <CardGroup>
-            <Card>
+            <Card style={{ marginTop: 10, marginBottom: 10, padding: 20 }}>
               <Card.Title>Want to change some info?</Card.Title>
               <Form className='profile-form' onSubmit={(e) => { this.handleUpdate(e) }}>
 
@@ -132,6 +126,9 @@ export class UserUpdate extends React.Component {
                   </Form.Label>
                   <Form.Control type="text" placeholder='Enter a new username' defaultValue={Username} onChange={(e) => this.setUsername(e.target.value || '')} />
                 </Form.Group>
+
+
+                {/* //The following is commented out for editing purposes - may bring back later */}
 
                 {/* <Form.Group controlId='formName' className='reg-form-inputs'>
                 <Form.Label>
@@ -159,17 +156,17 @@ export class UserUpdate extends React.Component {
                   <Form.Label>
                     Birthday:
                   </Form.Label>
-                  <Form.Control type="date" placeholder='Update your birthday' name='birthday' value={this.getBirthdayValue()} onChange={(e) => this.setUsername(e.target.value || '')} />
+                  <Form.Control type="date" placeholder='Update your birthday' name='birthday' value={this.getBirthdayValue()} onChange={(e) => this.setBirthday(e.target.value || '')} />
                 </Form.Group>
 
-                <Button id='update-button' variant='primary' type='submit' onClick={(e) => { this.handleUpdate(e) }} >
+                <Button id='update-button' variant='primary' type='submit' style={{ margin: 10 }} onClick={(e) => { this.handleUpdate(e) }} >
                   Update Your Info
                 </Button>
 
-                <Link to={`/movies`}>
+                {/*  <Link to={`/movies`}>
                   <Button variant="link">Movies</Button>
-                </Link>
-                <button onClick={() => { onBackClick(); }}>Back</button>
+                </Link> */}
+
               </Form>
             </Card>
           </CardGroup>
