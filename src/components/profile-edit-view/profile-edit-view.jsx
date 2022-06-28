@@ -7,9 +7,10 @@ import { Row, Col, CardGroup, Card } from 'react-bootstrap';
 import { CardGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
 import { setUser } from '../../actions/actions';
 
-export class UserUpdate extends React.Component {
+class UserUpdate extends React.Component {
   constructor() {
     super()
 
@@ -27,7 +28,8 @@ export class UserUpdate extends React.Component {
   }
 
 
-  //In progress - adding setUser action to retrieve user details for update form
+  //In progress - adding setUser action to retrieve user details for update form - added connect at end of code.
+
   getUser(token) {
     const Username = localStorage.getItem('user');
 
@@ -179,6 +181,13 @@ export class UserUpdate extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  };
+}
+
+export default connect(mapStateToProps, { setUser })(UserUpdate);
 
 /* UserUpdate.propTypes = {
   user: PropTypes.shape({

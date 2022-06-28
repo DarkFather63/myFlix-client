@@ -4,7 +4,7 @@ import { Button, Card, Col, Row, Container } from 'react-bootstrap';
 
 import { UserInfo } from './user-info';
 import FavoriteMovies from './favorite-movies';
-import { UserUpdate } from '../profile-edit-view/profile-edit-view';
+import UserUpdate from '../profile-edit-view/profile-edit-view';
 
 import './profile-view.scss';
 
