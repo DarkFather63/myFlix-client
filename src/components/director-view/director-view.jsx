@@ -13,9 +13,7 @@ export class DirectorView extends React.Component {
         <Row>
           <Col>
             <Card style={{ marginTop: 50, marginBottom: 30, padding: 10 }}>
-              <div className='headshot'>
-                <img src={movie.ImagePath} />
-              </div>
+              <Card.Img variant="top" src={movie.ImagePath} style={{ padding: 10 }} crossOrigin='anonymous' />
               <Card.Title className='director-name'>
                 <span className='value'>{movie.Director.Name}</span>
               </Card.Title>
@@ -30,17 +28,17 @@ export class DirectorView extends React.Component {
         </Row>
 
         <Row>
-          <Col>
-            <Link to={`/`}>
-              <Button variant="secondary">Movies</Button>
-            </Link>
-          </Col>
+
+          <Link to={`/`}>
+            <Button variant="secondary" style={{ margin: 10 }}>Movies</Button>
+          </Link>
+
+
+
+          <Link to={`/genres/${movie.Genre.Name}`}>
+            <Button variant="secondary" style={{ margin: 10 }}>Genre</Button>
+          </Link>
         </Row>
-
-        <Link to={`/genres/${movie.Genre.Name}`}>
-          <Button variant="secondary">Genre</Button>
-        </Link>
-
       </Container>
     );
   }

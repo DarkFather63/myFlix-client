@@ -13,36 +13,31 @@ export class MovieView extends React.Component {
         <Button variant='secondary' style={{ marginTop: 10, marginBottom: 10 }} onClick={() => { onBackClick(null); }}>Back</Button>
         <Row>
           <Col>
+
             <Card className='movie-view' style={{ marginTop: 50, marginBottom: 30, padding: 10 }}>
+              <Card.Img variant="top" src={movie.ImagePath} style={{ padding: 10 }} crossOrigin='anonymous' />
               <Card.Title className='movie-title'>
                 <span className='value' style={{ textAlign: 'center', fontSize: '2rem' }}>{movie.Title}</span>
               </Card.Title>
 
-              <div className='movie-poster' />
-              <img src={movie.ImagePath} />
 
-
-              <div className='movie-description'>
+              <Card.Text className='movie-description'>
                 <span className='value'>{movie.Description}</span>
-              </div>
+              </Card.Text>
             </Card>
           </Col>
         </Row>
 
         <Row>
-          <Col>
-            <Link to={`/directors/${movie.Director.Name}`}>
-              <Button variant="link">Director</Button>
-            </Link>
-          </Col>
-        </Row>
 
-        <Row>
-          <Col>
-            <Link to={`/genres/${movie.Genre.Name}`}>
-              <Button variant="link">Genre</Button>
-            </Link>
-          </Col>
+          <Link to={`/directors/${movie.Director.Name}`}>
+            <Button variant="secondary" style={{ margin: 10 }}>Director</Button>
+          </Link>
+
+          <Link to={`/genres/${movie.Genre.Name}`}>
+            <Button variant="secondary" style={{ margin: 10 }}>Genre</Button>
+          </Link>
+
         </Row>
 
 

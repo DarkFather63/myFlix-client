@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Card, CardGroup, Col, Row, Container } from 'react-bootstrap';
+import { Button, Card, Col, Row, Container } from 'react-bootstrap';
 
 import { UserInfo } from './user-info';
 import FavoriteMovies from './favorite-movies';
 import { UserUpdate } from '../profile-edit-view/profile-edit-view';
-import PropTypes from 'prop-types';
+
 import './profile-view.scss';
 
 export function ProfileView(props) {
@@ -44,6 +44,7 @@ export function ProfileView(props) {
       .then((response) => {
         console.log(response, isExecuted);
         if (isExecuted) {
+          console.log(response);
           alert('Profile deleted');
           localStorage.removeItem('user');
           localStorage.removeItem('token');
@@ -56,57 +57,8 @@ export function ProfileView(props) {
       });
   }
 
-  /*  const handleUpdate = (e) => {
-     e.preventDefault();
-     const isReq = validate()
-     if (isReq) {
-       axios.put(`https://eryn-moviedb.herokuapp.com/users/${props.user}`, {
-         Name: this.state.name,
-         Username: this.state.username,
-         Password: this.state.password,
-         Email: this.state.email,
-         Birthday: this.state.birthday
-       },
-         {
-           headers: { Authorization: `Bearer ${token}` },
-         }
-       )
-         .then((response) => {
-           this.setState({
-             username: response.data.Username,
-             password: response.data.Password,
-             email: response.data.Email,
-             birthday: response.data.Birthday
-           });
- 
-           localStorage.setItem('user', this.state.Username);
-           alert('Profile updated.');
-         })
-         .catch(function (error) {
-           console.log(error);
-           alert('Unable to update.');
-         });
-     }
-   }; */
 
-  /* const handleSubmit = (e) => {
-    e.preventDefault();
-    const isReq = validate();
-    if (isReq) {
-      axios.put('https://eryn-moviedb.herokuapp.com/users', {
-        Username: username,
-        Password: password,
-        Email: email
-      })
-        .then(response => {
-          const data = response.data;
-          props.onLoggedIn(data);
-        })
-        .catch(e => {
-          console.log('no such user')
-        });
-    }
-  }; */
+
 
   return (
     <Container>

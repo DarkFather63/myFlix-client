@@ -1,18 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-
 
 import { setMovies } from '../../actions/actions';
 
 import MoviesList from '../movies-list/movies-list';
-
-//Importing each view from their respective files 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { ProfileView } from '../profile-view/profile-view';
@@ -21,6 +16,8 @@ import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { MyNavbar } from '../navbar/navbar';
 
+
+
 //exports this view to the main index.jsx file (then to index.html)
 class MainView extends React.Component {
   //'Constructor' is the place to initialize a state's values - reps the moment a component is created in the memory.
@@ -28,9 +25,7 @@ class MainView extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      user: null
-    };
+    this.state = {};
   }
 
   //when login is successful, stores login token locally
@@ -103,13 +98,11 @@ class MainView extends React.Component {
               </Col>
             )
 
-            if (movies.length === 0) return <div className='main-view'></div>;
+            if (movies.length === 0) return <div className='main-view'>Loading...</div>;
 
 
             if (user) return (
-              <Col md={9} sm={4} >
-                <MoviesList movies={movies} key={movies._id} />;
-              </Col>
+              <MoviesList movies={movies} key={movies._id} />
             )
           }} />
 

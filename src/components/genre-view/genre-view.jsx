@@ -15,9 +15,7 @@ export class GenreView extends React.Component {
           <Col>
             <Card className='genre-view' style={{ marginTop: 50, marginBottom: 30, padding: 10 }}>
 
-              <div className='genre-image'>
-                <img src={movie.ImagePath} />
-              </div>
+              <Card.Img variant="top" src={movie.ImagePath} style={{ padding: 10 }} crossOrigin='anonymous' />
 
               <Card.Title className='value'>{movie.Genre.Name}</Card.Title>
 
@@ -33,13 +31,11 @@ export class GenreView extends React.Component {
 
         <Row>
           <Link to={`/directors/${movie.Director.Name}`}>
-            <Button variant="secondary">Director</Button>
+            <Button variant="secondary" style={{ margin: 10 }}>Director</Button>
           </Link>
-        </Row>
 
-        <Row>
           <Link to={`/movies/${movie._id}`}>
-            <Button variant="secondary">Movies</Button>
+            <Button variant="secondary" style={{ margin: 10 }}>Movies</Button>
           </Link>
         </Row>
 

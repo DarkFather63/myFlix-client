@@ -1,7 +1,11 @@
 import React from "react";
 import { Col, Row, Card } from 'react-bootstrap';
 
+import { setUser } from '../../actions/actions';
+
+
 export function UserInfo({ email, name }) {
+
   return (
     <>
       <Row>

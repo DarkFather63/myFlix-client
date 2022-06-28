@@ -2,24 +2,47 @@ import './movie-card.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import { Button, Figure } from 'react-bootstrap';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+
+import './movie-card.scss';
+import { Figure } from 'react-bootstrap';
 
 export class MovieCard extends React.Component {
   render() {
-    const { movie } = this.props;
+    const { movie, currentUser } = this.props;
+
+    //Need to add way to confirm user info to add movie to favorites.
+
+    const addFavMovie = (_id) => {
+      let token = localStorage.getItem('token');
+      let url = `https//eryn-moviedb.herokuapp.com/users/${currentUser}/movies/${_id}`;
+      axios.post(url, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(() => {
+          alert('Movie successfully added to favorites.')
+          window.open(`/users/${user}`, '_self');
+        })
+        .catch(error => console.error(error))
+    }
+
+
 
     return (
       <Card className="movie-card" key={movie._id}>
-        <Card.Img variant="top" src={movie.ImagePath} style={{ padding: 10 }} />
-        <Card.Body>
-          <Card.Title>{movie.Title}</Card.Title>
-          <Card.Subtitle>{movie.Genre.Name}</Card.Subtitle>
-          <Card.Text>{movie.Description}</Card.Text>
-          <Link to={`/movies/${movie._id}`}>
-            <Button variant="link">See more about this movie.</Button>
-          </Link>
-        </Card.Body>
+        <Card.Img variant="top" src={movie.ImagePath} style={{ padding: 10 }} crossOrigin='anonymous' />
+        <Figure>
+          <Card.Body>
+            <Card.Title>{movie.Title}</Card.Title>
+            <Card.Subtitle>{movie.Genre.Name}</Card.Subtitle><br></br>
+            <Link to={`/movies/${movie._id}`}>
+              <Button variant="link">See more about this movie.</Button>
+              <Button className='add-button' variant='secondary' onClick={() => addFavMovie()}>Add to Favorites</Button>
+            </Link>
+          </Card.Body>
+        </Figure>
       </Card>
     );
   }
