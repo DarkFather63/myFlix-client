@@ -25,7 +25,9 @@ class MainView extends React.Component {
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      user: null
+    };
   }
 
   //when login is successful, stores login token locally
@@ -132,13 +134,6 @@ class MainView extends React.Component {
             </Col>
           }} />
 
-          {/* <Route path={`/user-update/${user}`} render={({ history }) => {
-            if (!user) return <Redirect to="/" />
-            if (movies.length === 0) return <div className='main-view'></div>;
-            return <Col>
-              <UserUpdate user={user} onBackClick={() => history.goBack()} />
-            </Col>
-          }} /> */}
 
           <Route path="/movies/:id" render={({ match, history }) => {
             if (!user) return

@@ -7,6 +7,8 @@ import { Row, Col, CardGroup, Card } from 'react-bootstrap';
 import { CardGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+import { setUser } from '../../actions/actions';
+
 export class UserUpdate extends React.Component {
   constructor() {
     super()
@@ -24,6 +26,8 @@ export class UserUpdate extends React.Component {
     this.getUser(accessToken);
   }
 
+
+  //In progress - adding setUser action to retrieve user details for update form
   getUser(token) {
     const Username = localStorage.getItem('user');
 
@@ -31,8 +35,7 @@ export class UserUpdate extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        this.setState({
-          Name: response.data.Name,
+        this.props.setUser({
           Username: response.data.Username,
           Email: response.data.Email,
           Birthday: response.data.Birthday,
@@ -65,7 +68,7 @@ export class UserUpdate extends React.Component {
       }
     )
       .then((response) => {
-        this.setState({
+        this.props.setUser({
           username: response.data.Username,
           password: response.data.Password,
           email: response.data.Email,
@@ -108,7 +111,7 @@ export class UserUpdate extends React.Component {
 
   render() {
 
-    const { Username, Email, Birthday } = this.state;
+    const { Username, Email, Birthday } = this.props;
 
     return (
       <Row>
