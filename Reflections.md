@@ -14,7 +14,13 @@ If I could, I would start the whole project over with up-to-date libraries and f
 ##The Result (in screenshots)##
 
 
+<img width="1440" alt="Screen Shot 2022-06-29 at 10 58 21 AM" src="https://user-images.githubusercontent.com/99092650/176508341-131709e1-3bd3-4305-b73a-2817f864ba9d.png">
 
+<img width="1440" alt="Screen Shot 2022-06-29 at 10 58 29 AM" src="https://user-images.githubusercontent.com/99092650/176508391-9050cabd-c925-4d59-b756-5ef2725654c7.png">
+
+<img width="1440" alt="Screen Shot 2022-06-29 at 10 58 37 AM" src="https://user-images.githubusercontent.com/99092650/176508405-eeebf4e8-d906-4446-aeea-e8f1061b3b6f.png">
+
+<img width="1440" alt="Screen Shot 2022-06-29 at 10 58 42 AM" src="https://user-images.githubusercontent.com/99092650/176508435-49f8e206-86d6-4600-92bc-7a9ad5ba986d.png">
 
 ##Git Repo:##
 https://github.com/DarkFather63/myFlix-client
