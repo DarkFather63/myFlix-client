@@ -43864,13 +43864,13 @@ class MovieCard extends _reactDefault.default.Component {
         console.log(movie);
         const userId = localStorage.getItem('user');
         const token = localStorage.getItem('token');
-        _axiosDefault.default.post(`https//eryn-moviedb.herokuapp.com/users/${userId}/movies/${movie._id}`, {
+        _axiosDefault.default.post(`https://eryn-moviedb.herokuapp.com/users/${userId}/movies/${movie._id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then(()=>{
             alert('Movie successfully added to favorites.');
-            window.open(`/users/${user}`, '_self');
+            window.open(`/users/${userId}`, '_self');
         }).catch((error)=>console.error(error)
         );
     }
@@ -44962,47 +44962,47 @@ function FavoriteMovies(props) {
     return(/*#__PURE__*/ _jsxRuntime.jsx(_react.Fragment, {
         __source: {
             fileName: "src/components/profile-view/favorite-movies.jsx",
-            lineNumber: 31
+            lineNumber: 32
         },
         __self: this,
         children: favoriteMoviesList.length === 0 ? /*#__PURE__*/ _jsxRuntime.jsx("p", {
             __source: {
                 fileName: "src/components/profile-view/favorite-movies.jsx",
-                lineNumber: 33
+                lineNumber: 34
             },
             __self: this,
             children: "You have no favorite movies yet."
-        }) : favoriteMoviesList((movies)=>{
+        }) : favoriteMoviesList((movie1)=>{
             return(/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
                 __source: {
                     fileName: "src/components/profile-view/favorite-movies.jsx",
-                    lineNumber: 37
+                    lineNumber: 38
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Card.Body, {
                     __source: {
                         fileName: "src/components/profile-view/favorite-movies.jsx",
-                        lineNumber: 38
+                        lineNumber: 39
                     },
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
                             __source: {
                                 fileName: "src/components/profile-view/favorite-movies.jsx",
-                                lineNumber: 39
+                                lineNumber: 40
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
                                 xs: 12,
                                 __source: {
                                     fileName: "src/components/profile-view/favorite-movies.jsx",
-                                    lineNumber: 40
+                                    lineNumber: 41
                                 },
                                 __self: this,
                                 children: /*#__PURE__*/ _jsxRuntime.jsx("h2", {
                                     __source: {
                                         fileName: "src/components/profile-view/favorite-movies.jsx",
-                                        lineNumber: 41
+                                        lineNumber: 42
                                     },
                                     __self: this,
                                     children: "Favorite Movies:"
@@ -45012,7 +45012,7 @@ function FavoriteMovies(props) {
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
                             __source: {
                                 fileName: "src/components/profile-view/favorite-movies.jsx",
-                                lineNumber: 45
+                                lineNumber: 46
                             },
                             __self: this,
                             children: [
@@ -45025,21 +45025,21 @@ function FavoriteMovies(props) {
                                         className: "fav-movie",
                                         __source: {
                                             fileName: "src/components/profile-view/favorite-movies.jsx",
-                                            lineNumber: 47
+                                            lineNumber: 48
                                         },
                                         __self: this,
                                         children: [
                                             /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Figure, {
                                                 __source: {
                                                     fileName: "src/components/profile-view/favorite-movies.jsx",
-                                                    lineNumber: 48
+                                                    lineNumber: 49
                                                 },
                                                 __self: this,
                                                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.Link, {
                                                     to: `/movies/${_id}`,
                                                     __source: {
                                                         fileName: "src/components/profile-view/favorite-movies.jsx",
-                                                        lineNumber: 49
+                                                        lineNumber: 50
                                                     },
                                                     __self: this,
                                                     children: [
@@ -45048,14 +45048,14 @@ function FavoriteMovies(props) {
                                                             alt: Title,
                                                             __source: {
                                                                 fileName: "src/components/profile-view/favorite-movies.jsx",
-                                                                lineNumber: 50
+                                                                lineNumber: 51
                                                             },
                                                             __self: this
                                                         }),
                                                         /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Figure.Caption, {
                                                             __source: {
                                                                 fileName: "src/components/profile-view/favorite-movies.jsx",
-                                                                lineNumber: 54
+                                                                lineNumber: 55
                                                             },
                                                             __self: this,
                                                             children: Title
@@ -45069,7 +45069,7 @@ function FavoriteMovies(props) {
                                                 ,
                                                 __source: {
                                                     fileName: "src/components/profile-view/favorite-movies.jsx",
-                                                    lineNumber: 61
+                                                    lineNumber: 62
                                                 },
                                                 __self: this,
                                                 children: "Remove"
@@ -45086,6 +45086,13 @@ function FavoriteMovies(props) {
     }));
 }
 _c = FavoriteMovies;
+FavoriteMovies.propTypes = {
+    movie: _propTypesDefault.default.shape({
+        Title: _propTypesDefault.default.string.isRequired,
+        Description: _propTypesDefault.default.string.isRequired,
+        ImagePath: _propTypesDefault.default.string.isRequired
+    }).isRequired
+};
 exports.default = FavoriteMovies;
 var _c;
 $RefreshReg$(_c, "FavoriteMovies");

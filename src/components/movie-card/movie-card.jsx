@@ -22,12 +22,12 @@ export class MovieCard extends React.Component {
     const userId = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
-    axios.post(`https//eryn-moviedb.herokuapp.com/users/${userId}/movies/${movie._id}`, {
+    axios.post(`https://eryn-moviedb.herokuapp.com/users/${userId}/movies/${movie._id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(() => {
         alert('Movie successfully added to favorites.')
-        window.open(`/users/${user}`, '_self');
+        window.open(`/users/${userId}`, '_self');
       })
       .catch(error => console.error(error))
   }

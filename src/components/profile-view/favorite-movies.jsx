@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Figure, Row, Col, Button, Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+
 import './profile-view.scss';
 
 function FavoriteMovies(props) {
@@ -31,7 +32,7 @@ function FavoriteMovies(props) {
     <Fragment>
       {favoriteMoviesList.length === 0
         ? (<p>You have no favorite movies yet.</p>)
-        : favoriteMoviesList((movies) => {
+        : favoriteMoviesList((movie) => {
           return (
 
             <Card>
@@ -70,5 +71,13 @@ function FavoriteMovies(props) {
     </Fragment>
   )
 }
+
+FavoriteMovies.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired
+  }).isRequired
+};
 
 export default FavoriteMovies
