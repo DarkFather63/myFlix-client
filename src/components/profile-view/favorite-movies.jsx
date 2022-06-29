@@ -21,7 +21,7 @@ function FavoriteMovies(props) {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(() => {
-        alert('Movie successfully deleted.')
+        alert('Movie successfully removed from favorites.')
         window.open(`/users/${user}`, '_self');
       })
       .catch(error => console.error(error))

@@ -22,7 +22,7 @@ function MoviesList(props) {
 
   //NOTE! onBackClick may not work here - if not, try using it in MainView in the MoviesList route.
   return <>
-    <Col md={12} style={{ margin: '1em' }}>
+    <Col md={12} style={{ margin: '2em' }}>
       <VisibilityFilterInput visibilityFilter={visibilityFilter} />
     </Col>
 

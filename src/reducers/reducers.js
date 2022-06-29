@@ -1,7 +1,7 @@
 import { func } from "prop-types";
 import { combineReducers } from "redux";
 
-import { SET_FILTER, SET_MOVIES, SET_USER } from "../actions/actions";
+import { SET_FILTER, SET_MOVIES, SET_USER, SET_AUTH } from "../actions/actions";
 
 function visibilityFilter(state = '', action) {
   switch (action.type) {
@@ -31,7 +31,7 @@ function getAuth() {
   return null;
 }
 
-function userAuth(state = getAuth(), action) {
+function setAuth(state = getAuth(), action) {
   switch (action.type) {
     case SET_AUTH:
       return {
@@ -57,6 +57,7 @@ function user(state = {}, action) {
 const moviesApp = combineReducers({
   visibilityFilter,
   movies,
+  setAuth,
   user
 });
 

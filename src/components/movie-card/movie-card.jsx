@@ -10,24 +10,30 @@ import './movie-card.scss';
 import { Figure } from 'react-bootstrap';
 
 export class MovieCard extends React.Component {
-  render() {
-    const { movie, currentUser } = this.props;
+  constructor(props) {
+    super(props);
 
-    //Need to add way to confirm user info to add movie to favorites.
+    this.addFavMovie = this.addFavMovie.bind(this)
+  }
 
-    const addFavMovie = (_id) => {
-      let token = localStorage.getItem('token');
-      let url = `https//eryn-moviedb.herokuapp.com/users/${currentUser}/movies/${_id}`;
-      axios.post(url, {
-        headers: { Authorization: `Bearer ${token}` }
+  addFavMovie(movie) {
+    console.log(movie);
+
+    const userId = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+
+    axios.post(`https//eryn-moviedb.herokuapp.com/users/${userId}/movies/${movie._id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(() => {
+        alert('Movie successfully added to favorites.')
+        window.open(`/users/${user}`, '_self');
       })
-        .then(() => {
-          alert('Movie successfully added to favorites.')
-          window.open(`/users/${user}`, '_self');
-        })
-        .catch(error => console.error(error))
-    }
+      .catch(error => console.error(error))
+  }
 
+  render() {
+    const { movie } = this.props;
 
 
     return (
@@ -36,11 +42,11 @@ export class MovieCard extends React.Component {
         <Figure>
           <Card.Body>
             <Card.Title>{movie.Title}</Card.Title>
-            <Card.Subtitle>{movie.Genre.Name}</Card.Subtitle><br></br>
+            <Card.Subtitle>{movie.Genre.Name}</Card.Subtitle>
             <Link to={`/movies/${movie._id}`}>
               <Button variant="link">See more about this movie.</Button>
-              <Button className='add-button' variant='secondary' onClick={() => addFavMovie()}>Add to Favorites</Button>
             </Link>
+            <Button className='add-button' variant='secondary' onClick={() => this.addFavMovie(movie)}>Add to Favorites</Button>
           </Card.Body>
         </Figure>
       </Card>
@@ -55,3 +61,4 @@ MovieCard.propTypes = {
     ImagePath: PropTypes.string.isRequired
   }).isRequired
 };
+

@@ -13,6 +13,7 @@ export function ProfileView(props) {
   const [user, setUser] = useState(props.user);
   const [movies, setMovies] = useState(props.movies);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
+  
   const token = localStorage.getItem('token');
   const currentUser = localStorage.getItem('user');
 

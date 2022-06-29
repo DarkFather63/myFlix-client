@@ -28,7 +28,7 @@ class UserUpdate extends React.Component {
   }
 
 
-  //In progress - adding setUser action to retrieve user details for update form - added connect at end of code.
+  //Added setUser action to retrieve user details for update form - added connect at end of code.
 
   getUser(token) {
     const Username = localStorage.getItem('user');
@@ -89,19 +89,19 @@ class UserUpdate extends React.Component {
 
   setUsername(value) {
     this.setState({
-      Username: value
+      Username: ''
     });
   }
 
   setEmail(value) {
     this.setState({
-      Email: value
+      Email: ''
     });
   }
 
   setBirthday(value) {
     this.setState({
-      Birthday: value
+      Birthday: ''
     });
   }
 
@@ -168,10 +168,6 @@ class UserUpdate extends React.Component {
                   Update Your Info
                 </Button>
 
-                {/*  <Link to={`/movies`}>
-                  <Button variant="link">Movies</Button>
-                </Link> */}
-
               </Form>
             </Card>
           </CardGroup>
@@ -191,8 +187,7 @@ export default connect(mapStateToProps, { setUser })(UserUpdate);
 
 /* UserUpdate.propTypes = {
   user: PropTypes.shape({
-    Name: PropTypes.string.isRequired,
-    Bio: PropTypes.string.isRequired,
-    ImagePath: PropTypes.string.isRequired
+    Username: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
   }).isRequired
 }; */
