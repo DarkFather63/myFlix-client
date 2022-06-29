@@ -32,7 +32,7 @@ function FavoriteMovies(props) {
     <Fragment>
       {favoriteMoviesList.length === 0
         ? (<p>You have no favorite movies yet.</p>)
-        : favoriteMoviesList((movie) => {
+        : favoriteMoviesList.map((movie) => {
           return (
 
             <Card>
@@ -45,15 +45,15 @@ function FavoriteMovies(props) {
 
                 <Row> {favoriteMovieList.map((ImagePath, Title, _id) => {
                   return (
-                    <Col xs={12} md={6} lg={3} key={_id} className='fav-movie'>
+                    <Col xs={12} md={6} lg={3} key={movie._id} className='fav-movie'>
                       <Figure>
-                        <Link to={`/movies/${_id}`}>
+                        <Link to={`/movies/${movie._id}`}>
                           <Figure.Image
                             src={ImagePath}
                             alt={Title} />
 
                           <Figure.Caption>
-                            {Title}
+                            {movie.Title}
                           </Figure.Caption>
                         </Link>
                       </Figure>

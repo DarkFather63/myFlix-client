@@ -44972,7 +44972,7 @@ function FavoriteMovies(props) {
             },
             __self: this,
             children: "You have no favorite movies yet."
-        }) : favoriteMoviesList((movie1)=>{
+        }) : favoriteMoviesList.map((movie1)=>{
             return(/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Card, {
                 __source: {
                     fileName: "src/components/profile-view/favorite-movies.jsx",
@@ -45036,7 +45036,7 @@ function FavoriteMovies(props) {
                                                 },
                                                 __self: this,
                                                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.Link, {
-                                                    to: `/movies/${_id}`,
+                                                    to: `/movies/${movie1._id}`,
                                                     __source: {
                                                         fileName: "src/components/profile-view/favorite-movies.jsx",
                                                         lineNumber: 50
@@ -45058,7 +45058,7 @@ function FavoriteMovies(props) {
                                                                 lineNumber: 55
                                                             },
                                                             __self: this,
-                                                            children: Title
+                                                            children: movie1.Title
                                                         })
                                                     ]
                                                 })
@@ -45075,7 +45075,7 @@ function FavoriteMovies(props) {
                                                 children: "Remove"
                                             })
                                         ]
-                                    }, _id));
+                                    }, movie1._id));
                                 })
                             ]
                         })
