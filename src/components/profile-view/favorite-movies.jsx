@@ -18,19 +18,24 @@ function FavoriteMovies(props) {
   })
   console.log(finalFavorites);
 
+
   const result = movies.filter(({ _id }) => favoriteMovies.includes(_id));
   console.log(result);
 
+
   const removeFav = (movie) => {
+
     let token = localStorage.getItem('token');
-    let currentUser = localStorage.getItem('user._id');
-    let url = `https//eryn-moviedb.herokuapp.com/users/${currentUser}/movies/${movie._id}`;
-    axios.delete(url, {
+    let currentUser = localStorage.getItem('user');
+    console.log(`remove fav auth: ${token}`);
+
+    axios.delete(`https://eryn-moviedb.herokuapp.com/users/${currentUser}/movies/${movie._id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(() => {
-        alert('Movie successfully removed from favorites.')
-        window.open(`/users/${user}`, '_self');
+      .then((response) => {
+        console.log(response);
+        alert(`Movie successfully removed from favorites.`)
+        window.open(`/users/${currentUser}`, '_self');
       })
       .catch(error => console.error(error))
   }
@@ -43,15 +48,15 @@ function FavoriteMovies(props) {
     return result.map((movie) => (
       <Card className='fav-movie'>
         <Card.Img variant='top' src={movie.ImagePath} alt={movie.Title} style={{ padding: 10 }} crossOrigin='anonymous' />
-         <Figure>
+        <Figure>
           <Card.Body>
             <Card.Title>{movie.Title}</Card.Title>
             <Card.Subtitle>{movie.Genre.Name}</Card.Subtitle>
             <Link to={`/movies/${movie._id}`}>
               <Button variant="link">See more about this movie.</Button>
             </Link>
-          <Button variant="secondary" onClick={() => removeFav(_id)}>Remove</Button>
-        </Card.Body>
+            <Button variant="secondary" onClick={() => removeFav(movie)}>Remove</Button>
+          </Card.Body>
         </Figure>
       </Card>))
   }
