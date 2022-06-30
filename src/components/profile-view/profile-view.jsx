@@ -79,8 +79,10 @@ export function ProfileView(props) {
       </Row>
 
       <Row >
-        <Card.Title>Favorite Movies:</Card.Title>
-        <FavoriteMovies />
+        <Card.Title>Favorite Movies:</Card.Title><br></br>
+        <Col lg={4}>
+          <FavoriteMovies />
+        </Col>
       </Row>
 
       <Button className='delete-button' onClick={() => deleteUser()}>Delete Profile</Button>

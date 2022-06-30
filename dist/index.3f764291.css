@@ -28,18 +28,6 @@
 .fav-movie {
   margin-bottom: 15px;
 }
-.fav-movie figure {
-  position: relative;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin: auto;
-  width: 100%;
-}
-.fav-movie figure img {
-  height: 400px;
-  margin: auto;
-}
 .fav-movie figcaption {
   text-align: center;
 }
@@ -50,6 +38,18 @@
 
 .card {
   margin-bottom: 15px;
+}
+.card figure {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: wrap;
+  margin: auto;
+  width: 100%;
+}
+.card figure img {
+  height: 400px;
+  margin: auto;
 }
 .my-flix {
   color: steelblue;

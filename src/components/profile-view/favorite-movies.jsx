@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Figure, Row, Col, Button, Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -8,29 +8,23 @@ import './profile-view.scss';
 import { useSelector } from 'react-redux';
 
 function FavoriteMovies(props) {
-  /* const { movie, favoriteMovies, currentUser, token } = props;
-
-  const favoriteMoviesId = favoriteMovies.map(movie => movie._id)
-
-  const favoriteMoviesList = favoriteMovies.filter(m => {
-    return favoriteMoviesId.includes(movie._id)
-  }) */
 
   const movies = useSelector((state) => state.movies);
   const favoriteMovies = useSelector((state) => state.user.FavoriteMovies) || [];
 
 
-  const finalFavorites = favoriteMovies.map(function (movie) {
-    return movie._id;
+  const finalFavorites = favoriteMovies.map(function (obj) {
+    return obj._id;
   })
   console.log(finalFavorites);
 
-  const result = movies.filter(({ _id }) => finalFavorites.includes(_id));
+  const result = movies.filter(({ _id }) => favoriteMovies.includes(_id));
+  console.log(result);
 
-  const removeFav = (_id) => {
+  const removeFav = (movie) => {
     let token = localStorage.getItem('token');
     let currentUser = localStorage.getItem('user._id');
-    let url = `https//eryn-moviedb.herokuapp.com/users/${currentUser}/movies/${_id}`;
+    let url = `https//eryn-moviedb.herokuapp.com/users/${currentUser}/movies/${movie._id}`;
     axios.delete(url, {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -42,32 +36,23 @@ function FavoriteMovies(props) {
   }
 
 
-  if (favoriteMovies.length === 0 || !favoriteMovies) {
+  if (finalFavorites.length === 0 || !finalFavorites) {
     return (<p>You have no favorite movies yet.</p>)
   }
-  else if (favoriteMovies.length > 0) {
+  else if (finalFavorites.length > -1) {
     return result.map((movie) => (
-      <Card>
-        <Card.Body>
-          <Row>
-            <Col xs={12} md={6} lg={3} key={movie._id} className='fav-movie'>
-
-              <Link to={`/movies/${_id}`}>
-                <Card.Img
-                  src={movie.ImagePath}
-                  alt={movie.Title} />
-
-                <Card.Subtitle>
-                  {movie.Title}
-                </Card.Subtitle>
-              </Link>
-
-
-              <Button variant="secondary" onClick={() => removeFav(_id)}>Remove</Button>
-            </Col>
-
-          </Row>
+      <Card className='fav-movie'>
+        <Card.Img variant='top' src={movie.ImagePath} alt={movie.Title} style={{ padding: 10 }} crossOrigin='anonymous' />
+         <Figure>
+          <Card.Body>
+            <Card.Title>{movie.Title}</Card.Title>
+            <Card.Subtitle>{movie.Genre.Name}</Card.Subtitle>
+            <Link to={`/movies/${movie._id}`}>
+              <Button variant="link">See more about this movie.</Button>
+            </Link>
+          <Button variant="secondary" onClick={() => removeFav(_id)}>Remove</Button>
         </Card.Body>
+        </Figure>
       </Card>))
   }
 }
