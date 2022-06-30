@@ -11,11 +11,8 @@ import './profile-view.scss';
 export function ProfileView(props) {
 
   const [user, setUser] = useState(props.user);
-  const [movies, setMovies] = useState(props.movies);
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
-  
+
   const token = localStorage.getItem('token');
-  const currentUser = localStorage.getItem('user');
 
 
   const getUser = () => {
@@ -24,7 +21,6 @@ export function ProfileView(props) {
     })
       .then(response => {
         setUser(response.data);
-        setFavoriteMovies(response.data.favoriteMovies || [])
       })
       .catch(function (err) {
         console.log(err);
@@ -82,8 +78,9 @@ export function ProfileView(props) {
         </Col>
       </Row>
 
-      <Row>
-        <FavoriteMovies movies={movies} favoriteMovies={favoriteMovies} currentUser={currentUser} token={token} />
+      <Row >
+        <Card.Title>Favorite Movies:</Card.Title>
+        <FavoriteMovies />
       </Row>
 
       <Button className='delete-button' onClick={() => deleteUser()}>Delete Profile</Button>
