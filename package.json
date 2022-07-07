@@ -1,18 +1,18 @@
 {
   "name": "myflix-client",
   "version": "1.0.0",
-  "description": "##About## This is a database app built using MERN stack technology. Parcel is also used to transpile, minify and organize codebase.",
+  "description": "##About## Client side of myFlix app, built using MERN",
   "source": "src/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel",
-    "build": "parcel build"
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DarkFather63/myFlix-client.git"
   },
-  "author": "",
+  "author": "eryn craig",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DarkFather63/myFlix-client/issues"
@@ -20,16 +20,16 @@
   "homepage": "https://github.com/DarkFather63/myFlix-client#readme",
   "dependencies": {
     "axios": "^0.27.2",
-    "prop-types": "^15.8.1",
-    "react": "^18.1.0",
+    "parcel": "^2.0.0-rc.0",
+    "react": "^17.0.2",
     "react-bootstrap": "^2.4.0",
-    "react-dom": "^18.1.0",
-    "react-router-dom": "^5.3.0"
+    "react-dom": "^17.0.2",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "5.2.0",
+    "redux": "^4.2.0",
+    "redux-devtools-extension": "^2.13.9"
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.6.0",
-    "buffer": "^6.0.3",
-    "parcel": "^2.6.0",
-    "process": "^0.11.10"
+    "@parcel/transformer-sass": "^2.0.0-rc.0"
   }
 }

@@ -1,68 +1,74 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Figure, Row, Col, Button, Card } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import axios from 'axios';
+
 import './profile-view.scss';
+import { useSelector } from 'react-redux';
 
-function FavoriteMovies({ favoriteMovieList }) {
+function FavoriteMovies(props) {
 
-  const favoriteMoviesId = favoriteMovies.map(m => m._id)
+  const movies = useSelector((state) => state.movies);
+  const favoriteMovies = useSelector((state) => state.user.FavoriteMovies) || [];
 
-  const removeFav = (id) => {
+
+  const finalFavorites = favoriteMovies.map(function (obj) {
+    return obj._id;
+  })
+  console.log(finalFavorites);
+
+
+  const result = movies.filter(({ _id }) => favoriteMovies.includes(_id));
+  console.log(result);
+
+
+  const removeFav = (movie) => {
+
     let token = localStorage.getItem('token');
-    let url = `https//eryn-moviedb.herokuapp.com/users/${localStorage.getItem('user')}/movies/${id}`;
-    axios.delete(url, {
+    let currentUser = localStorage.getItem('user');
+    console.log(`remove fav auth: ${token}`);
+
+    axios.delete(`https://eryn-moviedb.herokuapp.com/users/${currentUser}/movies/${movie._id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(() => {
-        alert('Movie successfully deleted.')
-        window.open(`/users/${user}`, '_self');
+      .then((response) => {
+        console.log(response);
+        alert(`Movie successfully removed from favorites.`)
+        window.open(`/users/${currentUser}`, '_self');
       })
       .catch(error => console.error(error))
   }
 
-  return (
-    <Fragment>
-      {favoriteMovieList.length === 0
-        ? (<p>You have no favorite movies yet.</p>)
-        : favoriteMovieList.map((movie) => {
-          return (
 
-            <Card>
-              <Card.Body>
-                <Row>
-                  <Col xs={12}>
-                    <h2>Favorite Movies:</h2>
-                  </Col>
-                </Row>
-
-                <Row> {favoriteMovieList.map((ImagePath, Title, _id) => {
-                  return (
-                    <Col xs={12} md={6} lg={3} key={_id} className='fav-movie'>
-                      <Figure>
-                        <Link to={`/movies/${_id}`}>
-                          <Figure.Image
-                            src={ImagePath}
-                            alt={Title} />
-
-                          <Figure.Caption>
-                            {Title}
-                          </Figure.Caption>
-                        </Link>
-                      </Figure>
-
-
-                      <Button variant="secondary" onClick={() => removeFav(_id)}>Remove</Button>
-                    </Col>
-                  )
-                })
-                }
-                </Row>
-              </Card.Body>
-            </Card>)
-        })}
-    </Fragment>
-  )
+  if (finalFavorites.length === 0 || !finalFavorites) {
+    return (<p>You have no favorite movies yet.</p>)
+  }
+  else if (finalFavorites.length > -1) {
+    return result.map((movie) => (
+      <Card className='fav-movie'>
+        <Card.Img variant='top' src={movie.ImagePath} alt={movie.Title} style={{ padding: 10 }} crossOrigin='anonymous' />
+        <Figure>
+          <Card.Body>
+            <Card.Title>{movie.Title}</Card.Title>
+            <Card.Subtitle>{movie.Genre.Name}</Card.Subtitle>
+            <Link to={`/movies/${movie._id}`}>
+              <Button variant="link">See more about this movie.</Button>
+            </Link>
+            <Button variant="secondary" onClick={() => removeFav(movie)}>Remove</Button>
+          </Card.Body>
+        </Figure>
+      </Card>))
+  }
 }
+
+
+/* FavoriteMovies.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired
+  }).isRequired
+}; */
 
 export default FavoriteMovies

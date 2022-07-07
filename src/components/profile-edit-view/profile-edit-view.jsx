@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
@@ -7,108 +7,187 @@ import { Row, Col, CardGroup, Card } from 'react-bootstrap';
 import { CardGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export function UserUpdate(props) {
+import { connect } from 'react-redux';
+import { setUser } from '../../actions/actions';
 
-  const { user } = props;
+class UserUpdate extends React.Component {
+  constructor() {
+    super()
 
-  const [name, setName] = useState();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [values, setValues] = useState({
-    usernameErr: '',
-    passwordErr: '',
-    emailErr: '',
-    birthdayErr: ''
-  })
-
-  const validate = () => {
-    let isReq = true;
-    if (username.length < 2) {
-      setValues({ ...values, usernameErr: 'Username must be 2 or more characters long' });
-      isReq = false;
-    }
-    if (password.length < 6) {
-      setValues({ ...values, passwordErr: 'Password must be 6 or more characters long' });
-      isReq = false;
-    }
-    if (!email) {
-      setValues({ ...values, emailErr: 'Please use a valid email' });
-      isReq = false;
-    } else if (email.indexOf('@') === -1) {
-      setValues({ ...values, emailErr: 'Please use a valid email' });
-      isReq = false;
-    }
-    return isReq;
+    this.state = {
+      Username: '',
+      Email: '',
+      Birthday: '',
+      FavoriteMovies: []
+    };
   }
 
-  return (
-    <Row>
-      <Col md={8}>
-        <CardGroup>
-          <Card>
-            <Card.Title>Want to change some info?</Card.Title>
-            <Form className='profile-form' onSubmit={(e) => handleSubmit(e)}>
+  componentDidMount() {
+    const accessToken = localStorage.getItem('token');
+    this.getUser(accessToken);
+  }
 
-              <p></p>
 
-              <Form.Group controlId="formUsername" className='reg-form-inputs'>
-                <Form.Label>
-                  Username:
-                </Form.Label>
-                <Form.Control type="text" placeholder='Username' defaultValue={username} onChange={e => handleUpdate(e)} />
-                {values.usernameErr && <p>{values.usernameErr}</p>}
-              </Form.Group>
+  //Added setUser action to retrieve user details for update form - added connect at end of code.
 
-              <Form.Group controlId='formName' className='reg-form-inputs'>
+  getUser(token) {
+    const Username = localStorage.getItem('user');
+
+    axios.get(`https://eryn-moviedb.herokuapp.com/users/${Username}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => {
+        this.props.setUser({
+          Username: response.data.Username,
+          Email: response.data.Email,
+          Birthday: response.data.Birthday,
+          FavoriteMovies: response.data.FavoriteMovies
+        });
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
+  }
+
+
+  handleUpdate = (e) => {
+    e.preventDefault();
+
+    const Username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+
+
+    axios.put(`https://eryn-moviedb.herokuapp.com/users/${Username}`, {
+
+
+      Username: this.state.Username,
+      Email: this.state.Email,
+      Birthday: this.state.Birthday
+
+    },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+      .then((response) => {
+        this.props.setUser({
+          username: response.data.Username,
+          password: response.data.Password,
+          email: response.data.Email,
+          birthday: response.data.Birthday
+        });
+
+        localStorage.setItem('user', this.state.Username);
+        alert('Profile updated.');
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert('Unable to update.');
+      });
+
+  };
+
+  setUsername(value) {
+    this.setState({
+      Username: ''
+    });
+  }
+
+  setEmail(value) {
+    this.setState({
+      Email: ''
+    });
+  }
+
+  setBirthday(value) {
+    this.setState({
+      Birthday: ''
+    });
+  }
+
+  getBirthdayValue = () => {
+    if (this.state.Birthday) return this.state.Birthday.split('T')[0]
+    return ''
+  };
+
+
+  render() {
+
+    const { Username, Email, Birthday } = this.props;
+
+    return (
+      <Row>
+        <Col md={8}>
+          <CardGroup>
+            <Card style={{ marginTop: 10, marginBottom: 10, padding: 20 }}>
+              <Card.Title>Want to change some info?</Card.Title>
+              <Form className='profile-form' onSubmit={(e) => { this.handleUpdate(e) }}>
+
+                <p></p>
+
+                <Form.Group controlId='formUsername' className='reg-form-inputs'>
+                  <Form.Label>
+                    Username:
+                  </Form.Label>
+                  <Form.Control type="text" placeholder='Enter a new username' defaultValue={Username} onChange={(e) => this.setUsername(e.target.value || '')} />
+                </Form.Group>
+
+
+                {/* //The following is commented out for editing purposes - may bring back later */}
+
+                {/* <Form.Group controlId='formName' className='reg-form-inputs'>
                 <Form.Label>
                   Name:
                 </Form.Label>
-                <Form.Control type="text" placeholder='Name' defaultValue={user} onChange={e => handleUpdate(e)} />
-                {values.nameErr && <p>{values.nameErr}</p>}
-              </Form.Group>
+                <Form.Control type="text" placeholder='Name' defaultValue={Name} onChange={e => handleUpdate(e)} />
+              </Form.Group> */}
 
-              <Form.Group controlId='formPassword' className='reg-form-inputs'>
+                {/* <Form.Group controlId='formPassword' className='reg-form-inputs'>
                 <Form.Label>
                   Password:
                 </Form.Label>
                 <Form.Control type="password" placeholder='Password' defaultValue={password} onChange={e => handleUpdate(e)} />
                 {values.passwordErr && <p>{values.passwordErr}</p>}
-              </Form.Group>
+              </Form.Group> */}
 
-              <Form.Group controlId='Email' className='reg-form-inputs'>
-                <Form.Label>
-                  Email:
-                </Form.Label>
-                <Form.Control type="email" placeholder='Email' defaultValue={email} onChange={e => handleUpdate(e)} />
-                {values.emailErr && <p>{values.emailErr}</p>}
-              </Form.Group>
+                <Form.Group controlId='Email' className='reg-form-inputs'>
+                  <Form.Label>
+                    Email:
+                  </Form.Label>
+                  <Form.Control type="email" placeholder='Email' defaultValue={Email} onChange={(e) => this.setEmail(e.target.value || '')} />
+                </Form.Group>
 
-              <Form.Group controlId='updateBirthday'>
-                <Form.Label>
-                  Birthday:
-                </Form.Label>
-                <Form.Control type="date" placeholder='Birthday' name='birthday' onChange={e => handleUpdate(e)} />
-                {values.birthdayErr && <p>{values.birthdayErr}</p>}
-              </Form.Group>
+                <Form.Group controlId='updateBirthday'>
+                  <Form.Label>
+                    Birthday:
+                  </Form.Label>
+                  <Form.Control type="date" placeholder='Update your birthday' name='birthday' value={this.getBirthdayValue()} onChange={(e) => this.setBirthday(e.target.value || '')} />
+                </Form.Group>
 
-              <Link to={`/movies`}>
-                <Button variant="link">Movies</Button>
-              </Link>
-              <button onClick={() => { onBackClick(); }}>Back</button>
-            </Form>
-          </Card>
-        </CardGroup>
-      </Col>
-    </Row>
-  )
+                <Button id='update-button' variant='primary' type='submit' style={{ margin: 10 }} onClick={(e) => { this.handleUpdate(e) }} >
+                  Update Your Info
+                </Button>
+
+              </Form>
+            </Card>
+          </CardGroup>
+        </Col>
+      </Row>
+    )
+  }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  };
+}
+
+export default connect(mapStateToProps, { setUser })(UserUpdate);
+
 /* UserUpdate.propTypes = {
-  profile: PropTypes.shape({
-    Name: PropTypes.string.isRequired,
-    Bio: PropTypes.string.isRequired,
-    ImagePath: PropTypes.string.isRequired
+  user: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
   }).isRequired
 }; */
