@@ -44310,7 +44310,7 @@ function RegistrationView(props) {
     const handleRegister = (e)=>{
         e.preventDefault();
         const isReq = validate();
-        if (isReq) _axiosDefault.default.post('https://eryn-moviedb.herokuapp.com/users', {
+        if (isReq) _axiosDefault.default.post('https://erynsawesomemyflix.netlify.app/users', {
             Name: name,
             Username: username,
             Password: password,

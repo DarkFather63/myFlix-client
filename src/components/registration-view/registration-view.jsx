@@ -60,7 +60,7 @@ export function RegistrationView(props) {
     e.preventDefault();
     const isReq = validate()
     if (isReq) {
-      axios.post('https://eryn-moviedb.herokuapp.com/users', {
+      axios.post('https://erynsawesomemyflix.netlify.app/users', {
         Name: name,
         Username: username,
         Password: password,
