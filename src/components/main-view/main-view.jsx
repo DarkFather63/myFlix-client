@@ -104,7 +104,7 @@ class MainView extends React.Component {
 
 
             if (user) return (
-              <MoviesList movies={movies} key={movies._id} />
+              <MoviesList movies={movies} key={movies._id} onBackClick={this.setSelectedMovie} />
             )
           }} />
 

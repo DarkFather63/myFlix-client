@@ -28,7 +28,7 @@ function MoviesList(props) {
 
     {filteredMovies.map(m => (
       <Col xs={12} sm={6} md={3} key={movies._id}>
-        <MovieCard movie={m} onBackClick={this.setSelectedMovie} />
+        <MovieCard movie={m} />
       </Col>
     ))}
   </>;
