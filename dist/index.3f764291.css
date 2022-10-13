@@ -1,0 +1,57 @@
+.movie-card {
+  margin-bottom: 15px;
+}
+.movie-card button.btn {
+  display: block;
+  margin: auto;
+}
+
+.card {
+  margin-bottom: 15px;
+}
+.card figure {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: wrap;
+  margin: auto;
+  width: 100%;
+}
+.card img {
+  height: 400px;
+  width: auto;
+  margin: auto;
+}
+.btn {
+  padding: 3px;
+}
+.fav-movie {
+  margin-bottom: 15px;
+}
+.fav-movie figcaption {
+  text-align: center;
+}
+.fav-movie button.btn {
+  display: block;
+  margin: auto;
+}
+
+.card {
+  margin-bottom: 15px;
+}
+.card figure {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: wrap;
+  margin: auto;
+  width: 100%;
+}
+.card figure img {
+  height: 400px;
+  margin: auto;
+}
+.my-flix {
+  color: steelblue;
+}
+/*# sourceMappingURL=index.3f764291.css.map */

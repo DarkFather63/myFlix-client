@@ -29,8 +29,12 @@ export function MyNavbar({ user }) {
               <Nav.Link href={`/users/${user}`}>{user}</Nav.Link>
             )}
             {isAuth() && (
+              <Nav.Link href={`/`}>Home</Nav.Link>
+            )}
+            {isAuth() && (
               <Button variant='link' onClick={() => { onLoggedOut() }}>Logout</Button>
             )}
+
             {!isAuth() && (
               <Nav.Link href='/'>Sign-in</Nav.Link>
             )}

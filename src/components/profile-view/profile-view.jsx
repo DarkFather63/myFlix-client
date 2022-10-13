@@ -1,115 +1,94 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import Button, { Card, CardGroup, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import UserInfo from './user-info';
-import { FavoriteMovies } from './favorite-movies';
-import { UserUpdate } from '../profile-edit-view/profile-edit-view';
+import { Button, Card, Col, Row, Container } from 'react-bootstrap';
+
+import { UserInfo } from './user-info';
+import FavoriteMovies from './favorite-movies';
+import UserUpdate from '../profile-edit-view/profile-edit-view';
+
+import './profile-view.scss';
 
 export function ProfileView(props) {
 
-  const [user, setUser] = useState({});
-  const [movie, setMovie] = useState('');
-  /* const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [user, setUser] = useState(props.user);
 
-  const favoriteMovieList = favoriteMovies.filter(m => {
-    return favoriteMoviesId.includes(m._id)
-  }) */
+  const token = localStorage.getItem('token');
+
 
   const getUser = () => {
-    axios.get(`https://eryn-moviedb.herokuapp.com/users/${currentUser}`, {
+    axios.get(`https://eryn-moviedb.herokuapp.com/users/${props.user}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
         setUser(response.data);
-        setFavoriteMovies(response.data.FavoriteMovies)
       })
-      .catch(error => console.error(error))
+      .catch(function (err) {
+        console.log(err);
+        console.log('get user error');
+        console.log(err.response.data);
+      });
   }
 
   useEffect(() => {
     getUser();
   }, [])
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    const isReq = validate()
-    if (isReq) {
-      axios.put('https://eryn-moviedb.herokuapp.com/users', {
-        Name: name,
-        Username: username,
-        Password: password,
-        Email: email,
-        Birthday: birthday
-      })
-        .then(response => {
-          const data = response.data;
-          console.log(data);
-          alert('Update successful!')
+  const deleteUser = () => {
+    let isExecuted = confirm('Are you sure you want to delete your profile?')
+    axios.delete(`https://eryn-moviedb.herokuapp.com/users/${props.user}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => {
+        console.log(response, isExecuted);
+        if (isExecuted) {
+          console.log(response);
+          alert('Profile deleted');
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
           window.open('/', '_self');
-        })
-        .catch(response => {
-          console.error(response);
-          alert('Unable to update');
-        });
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const isReq = validate();
-    if (isReq) {
-      axios.put('https://eryn-moviedb.herokuapp.com/users', {
-        Username: username,
-        Password: password,
-        Email: email
+        }
       })
-        .then(response => {
-          const data = response.data;
-          props.onLoggedIn(data);
-        })
-        .catch(e => {
-          console.log('no such user')
-        });
-    }
-  };
+      .catch(function (error) {
+        console.log(error);
+        console.log('Unable to delete profile')
+      });
+  }
+
+
+
 
   return (
-    <Row>
-      <Card className='profile-view'>
-        <CardGroup key={user}>
-          <Col xs={12} sm={4}>
-            <Card>
-              <Card.Body>
-                <UserInfo name={user.Username} email={user.Email} />
-              </Card.Body>
-            </Card>
+    <Container>
+      <Button variant='secondary' style={{ marginTop: 10, marginBottom: 10 }} onClick={() => { onBackClick(null); }}>Back</Button>
+
+      <Row>
+        <Card className='profile-view' style={{ marginTop: 10, marginBottom: 10, padding: 0 }}>
+          <Col key={user}>
+            <Card.Body>
+              <UserInfo name={user.Username} email={user.Email} />
+            </Card.Body>
           </Col>
+        </Card>
+      </Row>
+      <Row>
+        <Col>
+          <Card.Body>
+            <UserUpdate user={user} />
+          </Card.Body>
+        </Col>
+      </Row>
 
-          <Col xs={12} sm={8}>
-            <Card>
-              <Card.Body>
-                <UserUpdate handleSubmit={handleSubmit} handleUpdate={handleUpdate} />
-              </Card.Body>
-            </Card>
-          </Col>
-        </CardGroup>
+      <Row >
+        <Card.Title>Favorite Movies:</Card.Title><br></br>
+        <Col lg={4}>
+          <FavoriteMovies />
+        </Col>
+      </Row>
 
-        {/* <FavoriteMovies favoriteMovieList={favoriteMovieList} />
- */}
+      <Button className='delete-button' onClick={() => deleteUser()}>Delete Profile</Button>
 
-        <Link to={`/users-update/${user}`}>
-          <Button variant="link">Update Profile</Button>
-        </Link>
 
-        <Link to={`/movies/${movie._id}`}>
-          <Button variant="link">Movies Main page</Button>
-        </Link>
 
-        <button onBackClick={() => history.goBack()}>Back</button>
-      </Card>
-
-    </Row>
+    </Container>
   );
 }
